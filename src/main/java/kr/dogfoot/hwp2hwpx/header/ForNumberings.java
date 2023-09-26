@@ -70,10 +70,10 @@ public class ForNumberings extends Converter {
                 .useInstWidthAnd(hwpParaHeadInfo.getProperty().isFollowStringWidth())
                 .autoIndentAnd(hwpParaHeadInfo.getProperty().isAutoIndent())
                 .widthAdjustAnd(hwpParaHeadInfo.getCorrectionValueForWidth())
-                .textOffsetTypeAnd(ValueConvertor.toValueUnit1(hwpParaHeadInfo.getProperty().getValueTypeForDistanceFromBody()))
+                .textOffsetTypeAnd(ValueConvertor.valueUnit1(hwpParaHeadInfo.getProperty().getValueTypeForDistanceFromBody()))
                 .textOffsetAnd(hwpParaHeadInfo.getDistanceFromBody())
-                .numFormatAnd(ValueConvertor.toNumberType1(hwpParaHeadInfo.getProperty().getParagraphNumberFormat()))
-                .charPrIDRefAnd(ValueConvertor.toRefID(hwpParaHeadInfo.getCharShapeID()))
+                .numFormatAnd(ValueConvertor.numberType1(hwpParaHeadInfo.getProperty().getParagraphNumberFormat()))
+                .charPrIDRefAnd(ValueConvertor.refID(hwpParaHeadInfo.getCharShapeID()))
                 .checkable(false);
         // todo : checkable ??
     }

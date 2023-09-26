@@ -16,8 +16,8 @@ public class ForPara extends Converter {
     public void convert(Para para, Paragraph hwpPara) {
         para
                 .idAnd("0")
-                .paraPrIDRefAnd(ValueConvertor.toRefID(hwpPara.getHeader().getParaShapeId()))
-                .styleIDRefAnd(ValueConvertor.toRefID(hwpPara.getHeader().getStyleId()))
+                .paraPrIDRefAnd(ValueConvertor.refID(hwpPara.getHeader().getParaShapeId()))
+                .styleIDRefAnd(ValueConvertor.refID(hwpPara.getHeader().getStyleId()))
                 .pageBreakAnd(hwpPara.getHeader().getDivideSort().isDividePage())
                 .columnBreakAnd(hwpPara.getHeader().getDivideSort().isDivideColumn())
                 .merged(hwpPara.getHeader().getIsMergedByTrack() != 0);
@@ -30,7 +30,7 @@ public class ForPara extends Converter {
     private static void runs(Para para, Paragraph hwpPara) {
         for (CharPositionShapeIdPair charPositionShapeIdPair : hwpPara.getCharShape().getPositonShapeIdPairList()) {
             para.addNewRun()
-                    .charPrIDRef(String.valueOf(charPositionShapeIdPair.getShapeId()));
+                    .charPrIDRef(ValueConvertor.refID(charPositionShapeIdPair.getShapeId()));
         }
     }
 

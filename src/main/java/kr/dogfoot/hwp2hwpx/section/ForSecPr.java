@@ -2,6 +2,7 @@ package kr.dogfoot.hwp2hwpx.section;
 
 import kr.dogfoot.hwp2hwpx.Converter;
 import kr.dogfoot.hwp2hwpx.Parameter;
+import kr.dogfoot.hwp2hwpx.util.ValueConvertor;
 import kr.dogfoot.hwplib.object.bodytext.control.ControlSectionDefine;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.CtrlHeaderSectionDefine;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.sectiondefine.SectionDefineHeaderProperty;
@@ -31,8 +32,8 @@ public class ForSecPr extends Converter {
                 .tabStopAnd((int) hwpSectionDefine.getHeader().getDefaultTabGap())
                 .tabStopValAnd((int) (hwpSectionDefine.getHeader().getDefaultTabGap() / 2))
                 .tabStopUnitAnd(ValueUnit1.HWPUNIT)
-                .outlineShapeIDRefAnd(String.valueOf(hwpSectionDefine.getHeader().getNumberParaShapeId()))
-                .memoShapeIDRefAnd(String.valueOf(0))
+                .outlineShapeIDRefAnd(ValueConvertor.refID(hwpSectionDefine.getHeader().getNumberParaShapeId()))
+                .memoShapeIDRefAnd(ValueConvertor.refID(0))
                 .textVerticalWidthHead(false);
         // todo : memoShapeIDRef, textVerticalWidthHead ??
 
@@ -186,7 +187,7 @@ public class ForSecPr extends Converter {
 
     private void pageBorderFill(PageBorderFill pageBorderFill, kr.dogfoot.hwplib.object.bodytext.control.sectiondefine.PageBorderFill hwpPageBorderFill) {
         pageBorderFill
-                .borderFillIDRefAnd(String.valueOf(hwpPageBorderFill.getBorderFillId()))
+                .borderFillIDRefAnd(ValueConvertor.refID(hwpPageBorderFill.getBorderFillId()))
                 .textBorderAnd(pageBorderFillPositionCriterion(hwpPageBorderFill.getProperty().getPositionCriterion()))
                 .headerInsideAnd(hwpPageBorderFill.getProperty().isIncludeHeader())
                 .footerInsideAnd(hwpPageBorderFill.getProperty().isIncludeFooter())
@@ -226,7 +227,6 @@ public class ForSecPr extends Converter {
         for (BatangPageInfo batangPageInfo : hwpSectionDefine.getBatangPageInfoList()) {
             secPr.addNewMasterPage()
                     .idRef(parameter.masterPageIdMap().get(batangPageInfo));
-            System.out.println(parameter.masterPageIdMap().get(batangPageInfo));
         }
     }
 }

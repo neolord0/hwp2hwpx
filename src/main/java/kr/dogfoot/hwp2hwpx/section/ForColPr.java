@@ -62,8 +62,8 @@ public class ForColPr {
         if (header.getDivideLine().getType() != BorderType.None) {
             colPr.createColLine();
             colPr.colLine()
-                    .typeAnd(ValueConvertor.toLineType2(header.getDivideLine().getType()))
-                    .widthAnd(ValueConvertor.toLineWidth(header.getDivideLine().getThickness()))
+                    .typeAnd(ValueConvertor.lineType2(header.getDivideLine().getType()))
+                    .widthAnd(ValueConvertor.lineWidth(header.getDivideLine().getThickness()))
                     .color(ValueConvertor.color(header.getDivideLine().getColor()));
         }
     }

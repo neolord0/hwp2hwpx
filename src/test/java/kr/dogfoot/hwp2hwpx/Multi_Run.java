@@ -1,16 +1,35 @@
 package kr.dogfoot.hwp2hwpx;
 
+import kr.dogfoot.hwp2hwpx.util.Util;
 import kr.dogfoot.hwplib.object.HWPFile;
 import kr.dogfoot.hwplib.reader.HWPReader;
 import kr.dogfoot.hwpxlib.object.HWPXFile;
 import kr.dogfoot.hwpxlib.writer.HWPXWriter;
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.nio.charset.StandardCharsets;
 
 public class Multi_Run {
     @Test
     public void test() throws Exception {
-        HWPFile fromFile = HWPReader.fromFile("test/Multi_Run/from.hwp");
+        String testPath = "test/Multi_Run";
+
+        HWPFile fromFile = HWPReader.fromFile(testPath + "/from.hwp");
         HWPXFile toFile = Hwp2Hwpx.toHWPX(fromFile);
-        HWPXWriter.toFilepath(toFile, "test/Multi_Run/to.zip");
+        HWPXWriter.toFilepath(toFile, testPath +  "/to.zip");
+
+        {
+            String resultXML = Util.loadXMLString(testPath + "/result/header.xml", StandardCharsets.UTF_8);
+            String toXML = Util.zipFileString(testPath + "/to.zip", "Contents/header.xml", StandardCharsets.UTF_8);
+            Assert.assertEquals(resultXML, toXML);
+        }
+
+        {
+            String resultXML = Util.loadXMLString(testPath + "/result/section0.xml", StandardCharsets.UTF_8);
+            String toXML = Util.zipFileString(testPath + "/to.zip", "Contents/section0.xml", StandardCharsets.UTF_8);
+            Assert.assertEquals(resultXML, toXML);
+        }
+
     }
 }

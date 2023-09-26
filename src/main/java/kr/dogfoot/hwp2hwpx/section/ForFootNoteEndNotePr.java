@@ -40,8 +40,8 @@ public class ForFootNoteEndNotePr {
         noteShape.createNoteLine();
         noteShape.noteLine()
                 .lengthAnd((int) hwpFootNoteShape.getDivideLineLength())
-                .typeAnd(ValueConvertor.toLineType2(hwpFootNoteShape.getDivideLine().getType()))
-                .widthAnd(ValueConvertor.toLineWidth(hwpFootNoteShape.getDivideLine().getThickness()))
+                .typeAnd(ValueConvertor.lineType2(hwpFootNoteShape.getDivideLine().getType()))
+                .widthAnd(ValueConvertor.lineWidth(hwpFootNoteShape.getDivideLine().getThickness()))
                 .color(ValueConvertor.color(hwpFootNoteShape.getDivideLine().getColor()));
     }
 

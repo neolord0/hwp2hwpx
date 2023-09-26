@@ -23,7 +23,10 @@ public class ForContentHPFFile extends Converter {
     }
 
     public void convert() {
-        contentHPFFile = parameter.hwpx().contentHPFFile();
+        contentHPFFile = parameter.hwpx().contentHPFFile()
+                .idAnd("")
+                .versionAnd("")
+                .uniqueIdentifierAnd("");
         hwpSectionList = parameter.hwp().bodyText().getSectionList();
 
         metadata();

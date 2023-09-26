@@ -168,7 +168,7 @@ public class ForCharProperties extends Converter {
         charPr.createUnderline();
         charPr.underline()
                 .typeAnd(underLineType(hwpCharShape.getProperty().getUnderLineSort()))
-                .shapeAnd(ValueConvertor.toLineType3(hwpCharShape.getProperty().getUnderLineShape()))
+                .shapeAnd(ValueConvertor.lineType3(hwpCharShape.getProperty().getUnderLineShape()))
                 .color(ValueConvertor.color(hwpCharShape.getUnderLineColor()));
     }
 
@@ -188,7 +188,7 @@ public class ForCharProperties extends Converter {
         charPr.createStrikeout();
         if (hwpCharShape.getProperty().isStrikeLine()) {
             charPr.strikeout()
-                    .shapeAnd(ValueConvertor.toLineType2(hwpCharShape.getProperty().getStrikeLineShape()))
+                    .shapeAnd(ValueConvertor.lineType2(hwpCharShape.getProperty().getStrikeLineShape()))
                     .color(ValueConvertor.color(hwpCharShape.getStrikeLineColor()));
         } else {
             charPr.strikeout()

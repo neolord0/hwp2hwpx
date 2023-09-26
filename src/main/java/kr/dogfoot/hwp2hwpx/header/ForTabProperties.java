@@ -13,7 +13,6 @@ import kr.dogfoot.hwpxlib.object.content.header_xml.RefList;
 import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.TabItemType;
 import kr.dogfoot.hwpxlib.object.content.header_xml.references.TabPr;
 import kr.dogfoot.hwpxlib.object.content.header_xml.references.tabpr.TabItem;
-import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.T;
 
 import java.util.ArrayList;
 
@@ -64,7 +63,7 @@ public class ForTabProperties extends Converter {
                 TabItem tabItem = new TabItem()
                         .posAnd((int) hwpTabInfo.getPosition() / 2)
                         .typeAnd(tabItemType(hwpTabInfo.getTabSort()))
-                        .leaderAnd(ValueConvertor.toLineType2(hwpTabInfo.getFillSort()));
+                        .leaderAnd(ValueConvertor.lineType2(hwpTabInfo.getFillSort()));
                 caseObject.addChild(tabItem);
             }
 
@@ -75,7 +74,7 @@ public class ForTabProperties extends Converter {
                 TabItem tabItem = new TabItem()
                         .posAnd((int) hwpTabInfo.getPosition())
                         .typeAnd(tabItemType(hwpTabInfo.getTabSort()))
-                        .leaderAnd(ValueConvertor.toLineType2(hwpTabInfo.getFillSort()));
+                        .leaderAnd(ValueConvertor.lineType2(hwpTabInfo.getFillSort()));
                 defaultObject.addChild(tabItem);
             }
             switchPosition++;

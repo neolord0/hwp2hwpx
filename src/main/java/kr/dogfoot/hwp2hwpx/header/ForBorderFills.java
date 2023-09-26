@@ -146,8 +146,8 @@ public class ForBorderFills extends Converter {
 
     private void border(Border border, EachBorder hwpBorder) {
         border
-                .typeAnd(ValueConvertor.toLineType2(hwpBorder.getType()))
-                .widthAnd(ValueConvertor.toLineWidth(hwpBorder.getThickness()))
+                .typeAnd(ValueConvertor.lineType2(hwpBorder.getType()))
+                .widthAnd(ValueConvertor.lineWidth(hwpBorder.getThickness()))
                 .color(ValueConvertor.color(hwpBorder.getColor()));
     }
 }

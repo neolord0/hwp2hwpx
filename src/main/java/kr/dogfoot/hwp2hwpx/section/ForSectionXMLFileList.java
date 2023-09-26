@@ -39,9 +39,7 @@ public class ForSectionXMLFileList extends Converter {
 
     private void section() {
         for(Paragraph hwpPara : hwpSection.getParagraphs()) {
-            Para para = sectionXMLFile.addNewPara();
-
-            forPara.convert(para, hwpPara);
+            forPara.convert(sectionXMLFile.addNewPara(), hwpPara);
         }
     }
 }

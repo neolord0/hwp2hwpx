@@ -40,9 +40,9 @@ public class ForStyles extends Converter {
                 .typeAnd(styleType(hwpStyle.getProeprty().getStyleSort()))
                 .nameAnd(hwpStyle.getHangulName())
                 .engNameAnd(hwpStyle.getEnglishName())
-                .paraPrIDRefAnd(ValueConvertor.toRefID(hwpStyle.getParaShapeId()))
-                .charPrIDRefAnd(ValueConvertor.toRefID(hwpStyle.getCharShapeId()))
-                .nextStyleIDRefAnd(ValueConvertor.toRefID(hwpStyle.getNextStyleId()))
+                .paraPrIDRefAnd(ValueConvertor.refID(hwpStyle.getParaShapeId()))
+                .charPrIDRefAnd(ValueConvertor.refID(hwpStyle.getCharShapeId()))
+                .nextStyleIDRefAnd(ValueConvertor.refID(hwpStyle.getNextStyleId()))
                 .langIDAnd(String.valueOf(hwpStyle.getLanguageId()))
                 .lockForm(false);
 

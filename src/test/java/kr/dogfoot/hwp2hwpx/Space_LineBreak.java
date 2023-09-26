@@ -7,14 +7,13 @@ import kr.dogfoot.hwpxlib.object.HWPXFile;
 import kr.dogfoot.hwpxlib.writer.HWPXWriter;
 import org.junit.Assert;
 import org.junit.Test;
-import sun.org.mozilla.javascript.internal.ast.Yield;
 
 import java.nio.charset.StandardCharsets;
 
-public class 빈파일 {
+public class Space_LineBreak {
     @Test
     public void test() throws Exception {
-        String testPath = "test/빈파일";
+        String testPath = "test/space_linebreak";
 
         HWPFile fromFile = HWPReader.fromFile(testPath + "/from.hwp");
         HWPXFile toFile = Hwp2Hwpx.toHWPX(fromFile);
@@ -31,5 +30,5 @@ public class 빈파일 {
             String toXML = Util.zipFileString(testPath + "/to.zip", "Contents/section0.xml", StandardCharsets.UTF_8);
             Assert.assertEquals(resultXML, toXML);
         }
-    }
+   }
 }

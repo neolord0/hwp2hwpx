@@ -1,6 +1,5 @@
 package kr.dogfoot.hwp2hwpx.header.inner;
 
-import kr.dogfoot.hwp2hwpx.util.HWPUtil;
 import kr.dogfoot.hwp2hwpx.util.ValueConvertor;
 import kr.dogfoot.hwplib.object.docinfo.FaceName;
 import kr.dogfoot.hwplib.object.docinfo.facename.FontTypeInfo;
@@ -40,7 +39,7 @@ public class ForFont {
 
     private static void typeInfo(TypeInfo typeInfo, FontTypeInfo hwpFontTypeInfo) {
         typeInfo
-                .familyTypeAnd(ValueConvertor.toFontFamilyType(hwpFontTypeInfo.getFontType()))
+                .familyTypeAnd(fontFamilyType(hwpFontTypeInfo.getFontType()))
                 .weightAnd((int) hwpFontTypeInfo.getThickness())
                 .proportionAnd((int) hwpFontTypeInfo.getRatio())
                 .contrastAnd((int) hwpFontTypeInfo.getContrast())
@@ -50,4 +49,28 @@ public class ForFont {
                 .midlineAnd((int) hwpFontTypeInfo.getMiddleLine())
                 .xHeight((int) hwpFontTypeInfo.getxHeight());
     }
+
+    private static FontFamilyType fontFamilyType(short value) {
+        switch (value) {
+            case 0:
+                return FontFamilyType.FCAT_UNKNOWN;
+            case 1:
+                return FontFamilyType.FCAT_MYUNGJO;
+            case 2:
+                return FontFamilyType.FCAT_GOTHIC;
+            case 3:
+                return FontFamilyType.FCAT_SSERIF;
+            case 4:
+                return FontFamilyType.FCAT_BRUSHSCRIPT;
+            case 5:
+                return FontFamilyType.FCAT_DECORATIVE;
+            case 6:
+                return FontFamilyType.FCAT_NONRECTMJ;
+            case 7:
+                return FontFamilyType.FCAT_NONRECTGT;
+            default:
+                return FontFamilyType.FCAT_UNKNOWN;
+        }
+    }
+
 }

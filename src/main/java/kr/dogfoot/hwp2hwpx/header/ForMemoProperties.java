@@ -38,8 +38,8 @@ public class ForMemoProperties extends Converter {
     private void memoPr() {
         memoPr
                 .widthAnd((int) hwpMemoShape.getWidth())
-                .lineTypeAnd(ValueConvertor.toLineType2(hwpMemoShape.getLineType()))
-                .lineWidthAnd(ValueConvertor.toLineWidth(hwpMemoShape.getLineWidth()))
+                .lineTypeAnd(ValueConvertor.lineType2(hwpMemoShape.getLineType()))
+                .lineWidthAnd(ValueConvertor.lineWidth(hwpMemoShape.getLineWidth()))
                 .lineColorAnd(ValueConvertor.color(hwpMemoShape.getLineColor()))
                 .fillColorAnd(ValueConvertor.color(hwpMemoShape.getFillColor()))
                 .activeColorAnd(ValueConvertor.color(hwpMemoShape.getActiveColor()))

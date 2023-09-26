@@ -8,7 +8,6 @@ import kr.dogfoot.hwplib.object.docinfo.parashape.LineDivideForEnglish;
 import kr.dogfoot.hwplib.object.docinfo.parashape.LineDivideForHangul;
 import kr.dogfoot.hwplib.object.docinfo.parashape.LineSpaceSort;
 import kr.dogfoot.hwplib.object.docinfo.parashape.ParaHeadShape;
-import kr.dogfoot.hwpxlib.object.common.HWPXObject;
 import kr.dogfoot.hwpxlib.object.common.compatibility.Case;
 import kr.dogfoot.hwpxlib.object.common.compatibility.Default;
 import kr.dogfoot.hwpxlib.object.common.compatibility.Switch;
@@ -67,8 +66,8 @@ public class ForParaProperties extends Converter {
     private void align() {
         paraPr.createAlign();
         paraPr.align()
-                .horizontalAnd(ValueConvertor.toHorizontalAlign2(hwpParaShape.getProperty1().getAlignment()))
-                .vertical(ValueConvertor.toVerticalAlign1(hwpParaShape.getProperty1().getVerticalAlignment()));
+                .horizontalAnd(ValueConvertor.horizontalAlign2(hwpParaShape.getProperty1().getAlignment()))
+                .vertical(ValueConvertor.verticalAlign1(hwpParaShape.getProperty1().getVerticalAlignment()));
     }
 
     private void heading() {

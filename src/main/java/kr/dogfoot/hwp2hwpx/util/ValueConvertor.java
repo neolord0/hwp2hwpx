@@ -1,5 +1,6 @@
 package kr.dogfoot.hwp2hwpx.util;
 
+import kr.dogfoot.hwplib.object.bodytext.control.gso.textbox.TextVerticalAlignment;
 import kr.dogfoot.hwplib.object.bodytext.control.sectiondefine.NumberShape;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.BorderThickness;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.BorderType;
@@ -10,37 +11,14 @@ import kr.dogfoot.hwplib.object.docinfo.parashape.Alignment;
 import kr.dogfoot.hwplib.object.docinfo.parashape.VerticalAlignment;
 import kr.dogfoot.hwplib.object.etc.Color4Byte;
 import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.*;
-import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.NumberType2;
+import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.*;
 
 public class ValueConvertor {
-    public static FontFamilyType toFontFamilyType(short value) {
-        switch (value) {
-            case 0:
-                return FontFamilyType.FCAT_UNKNOWN;
-            case 1:
-                return FontFamilyType.FCAT_MYUNGJO;
-            case 2:
-                return FontFamilyType.FCAT_GOTHIC;
-            case 3:
-                return FontFamilyType.FCAT_SSERIF;
-            case 4:
-                return FontFamilyType.FCAT_BRUSHSCRIPT;
-            case 5:
-                return FontFamilyType.FCAT_DECORATIVE;
-            case 6:
-                return FontFamilyType.FCAT_NONRECTMJ;
-            case 7:
-                return FontFamilyType.FCAT_NONRECTGT;
-            default:
-                return FontFamilyType.FCAT_UNKNOWN;
-        }
-    }
-
     public static Boolean toBoolean(short value) {
         return (value == 0) ? false : true;
     }
 
-    public static LineType2 toLineType2(BorderType hwpType) {
+    public static LineType2 lineType2(BorderType hwpType) {
         switch (hwpType) {
             case None:
                 return LineType2.NONE;
@@ -70,7 +48,7 @@ public class ValueConvertor {
         return LineType2.NONE;
     }
 
-    public static LineWidth toLineWidth(BorderThickness hwpThickness) {
+    public static LineWidth lineWidth(BorderThickness hwpThickness) {
         switch (hwpThickness) {
             case MM0_1:
                 return LineWidth.MM_0_1;
@@ -124,7 +102,7 @@ public class ValueConvertor {
     }
 
 
-    public static LineType3 toLineType3(BorderType2 hwpType) {
+    public static LineType3 lineType3(BorderType2 hwpType) {
         switch (hwpType) {
             case Solid:
                 return LineType3.SOLID;
@@ -161,7 +139,7 @@ public class ValueConvertor {
         return LineType3.SOLID;
     }
 
-    public static LineType2 toLineType2(BorderType2 hwpType) {
+    public static LineType2 lineType2(BorderType2 hwpType) {
         switch (hwpType) {
             case Solid:
                 return LineType2.SOLID;
@@ -196,7 +174,7 @@ public class ValueConvertor {
         return LineType2.NONE;
     }
 
-    public static ValueUnit1 toValueUnit1(ValueType hwpType) {
+    public static ValueUnit1 valueUnit1(ValueType hwpType) {
         switch (hwpType) {
             case RatioForLetter:
                 return ValueUnit1.PERCENT;
@@ -206,7 +184,7 @@ public class ValueConvertor {
         return ValueUnit1.HWPUNIT;
     }
 
-    public static HorizontalAlign2 toHorizontalAlign2(Alignment hwpAlign) {
+    public static HorizontalAlign2 horizontalAlign2(Alignment hwpAlign) {
         switch (hwpAlign) {
             case Justify:
                 return HorizontalAlign2.JUSTIFY;
@@ -224,7 +202,7 @@ public class ValueConvertor {
         return HorizontalAlign2.JUSTIFY;
     }
 
-    public static VerticalAlign1 toVerticalAlign1(VerticalAlignment hwpVertAlign) {
+    public static VerticalAlign1 verticalAlign1(VerticalAlignment hwpVertAlign) {
         switch (hwpVertAlign) {
             case ByFont:
                 return VerticalAlign1.BASELINE;
@@ -238,7 +216,7 @@ public class ValueConvertor {
         return VerticalAlign1.BASELINE;
     }
 
-    public static String toRefID(long hwpRefID) {
+    public static String refID(long hwpRefID) {
         if (hwpRefID == -1) {
             return "4294967295";
         } else {
@@ -246,8 +224,7 @@ public class ValueConvertor {
         }
     }
 
-
-    public static NumberType1 toNumberType1(ParagraphNumberFormat hwpParaNumberFormat) {
+    public static NumberType1 numberType1(ParagraphNumberFormat hwpParaNumberFormat) {
         switch (hwpParaNumberFormat) {
             case Number:
                 return NumberType1.DIGIT;
@@ -333,6 +310,18 @@ public class ValueConvertor {
         } else {
             return str;
         }
-     }
+    }
+
+    public static VerticalAlign2 verticalAlign2(TextVerticalAlignment hwpTextVerticalAlignment) {
+        switch (hwpTextVerticalAlignment) {
+            case Top:
+                return VerticalAlign2.TOP;
+            case Center:
+                return VerticalAlign2.CENTER;
+            case Bottom:
+                return VerticalAlign2.BOTTOM;
+        }
+        return VerticalAlign2.CENTER;
+    }
 }
 

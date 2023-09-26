@@ -1,17 +1,13 @@
 package kr.dogfoot.hwp2hwpx.section;
 
+import com.sun.jmx.snmp.agent.SnmpUserDataFactory;
 import kr.dogfoot.hwp2hwpx.Converter;
 import kr.dogfoot.hwp2hwpx.Parameter;
-import kr.dogfoot.hwplib.object.bodytext.control.Control;
-import kr.dogfoot.hwplib.object.bodytext.control.ControlColumnDefine;
-import kr.dogfoot.hwplib.object.bodytext.control.ControlField;
-import kr.dogfoot.hwplib.object.bodytext.control.ControlSectionDefine;
+import kr.dogfoot.hwp2hwpx.section.object.ForTable;
+import kr.dogfoot.hwplib.object.bodytext.control.*;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.text.*;
-import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.Ctrl;
-import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.Para;
-import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.Run;
-import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.T;
+import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.*;
 
 import java.io.UnsupportedEncodingException;
 
@@ -101,9 +97,58 @@ public class ForChars extends Converter {
 
 
     private void charControl(HWPCharControlChar hwpChar) {
-        endT();
+        switch (hwpChar.getCode()) {
+            case 10: // 한 줄 끝(line break)
+                addLineBreakFromCurrentT();
+                break;
+            case 13:
+                startT();
+                break;
+            case 24: // 하이픈
+                addHyphenFromCurrentT();
+                break;
+            case 30: // 묶음 빈칸
+                addNBSpaceFromCurrentT();
+                break;
+            case 31: // 고정폭 빈칸
+                addFWSpaceFromCurrentT();
+                break;
+        }
+    }
 
-        System.out.println("CC: " + para.getRunIndex(currentRun) + " " + hwpChar.getCode());
+    private void addLineBreakFromCurrentT() {
+        startT();
+        if (textBuffer.length() > 0) {
+            currentT.addText(textBuffer.toString());
+            textBuffer.setLength(0);
+        }
+        currentT.addNewLineBreak();
+    }
+
+    private void addHyphenFromCurrentT() {
+        startT();
+        if (textBuffer.length() > 0) {
+            textBuffer.setLength(0);
+        }
+        currentT.addNewHyphen();
+    }
+
+    private void addNBSpaceFromCurrentT() {
+        startT();
+        if (textBuffer.length() > 0) {
+            currentT.addText(textBuffer.toString());
+            textBuffer.setLength(0);
+        }
+        currentT.addNewNBSpace();
+    }
+
+    private void addFWSpaceFromCurrentT() {
+        startT();
+        if (textBuffer.length() > 0) {
+            currentT.addText(textBuffer.toString());
+            textBuffer.setLength(0);
+        }
+        currentT.addNewFWSpace();
     }
 
     private void inlineControl(HWPCharControlInline hwpChar) {
@@ -127,6 +172,8 @@ public class ForChars extends Converter {
         } else {
             switch (hwpControl.getType()) {
                 case Table:
+                    endCtrl();
+                    new ForTable(parameter).convert(currentRun.addNewTable(), (ControlTable) hwpControl);
                     break;
                 case Gso:
                     break;
