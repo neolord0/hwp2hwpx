@@ -1,5 +1,8 @@
 package kr.dogfoot.hwp2hwpx.util;
 
+import com.sun.xml.internal.bind.v2.model.core.ID;
+import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.autonumber.NumberSort;
+import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.header.HeaderFooterApplyPage;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.textbox.TextVerticalAlignment;
 import kr.dogfoot.hwplib.object.bodytext.control.sectiondefine.NumberShape;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.BorderThickness;
@@ -323,5 +326,78 @@ public class ValueConvertor {
         }
         return VerticalAlign2.CENTER;
     }
+
+    public static ApplyPageType toApplyPageType(HeaderFooterApplyPage hwpApplyPage) {
+        switch (hwpApplyPage) {
+            case BothPage:
+                return ApplyPageType.BOTH;
+            case EvenPage:
+                return ApplyPageType.EVEN;
+            case OddPage:
+                return ApplyPageType.ODD;
+        }
+        return ApplyPageType.BOTH;
+    }
+
+    public static long toUnsigned(long value) {
+        int temp = (int) value;
+        return temp & 0xffffffffL;
+    }
+
+    public static NumType toNumType(NumberSort hwpNumberSort) {
+        switch (hwpNumberSort) {
+            case Page:
+                return NumType.PAGE;
+            case FootNote:
+                return NumType.FOOTNOTE;
+            case EndNote:
+                return NumType.ENDNOTE;
+            case Picture:
+                return NumType.PICTURE;
+            case Table:
+                return NumType.TABLE;
+            case Equation:
+                return NumType.EQUATION;
+        }
+        return NumType.PAGE;
+    }
+
+    public static NumberType1 toNumberType1(NumberShape hwpNumberShape) {
+        switch (hwpNumberShape) {
+            case Number:
+                return NumberType1.DIGIT;
+            case CircledNumber:
+                return NumberType1.CIRCLED_DIGIT;
+            case UppercaseRomanNumber:
+                return NumberType1.ROMAN_CAPITAL;
+            case LowercaseRomanNumber:
+                return NumberType1.ROMAN_SMALL;
+            case UppercaseAlphabet:
+                return NumberType1.LATIN_CAPITAL;
+            case LowercaseAlphabet:
+                return NumberType1.LATIN_SMALL;
+            case CircledUppercaseAlphabet:
+                return NumberType1.CIRCLED_LATIN_CAPTION;
+            case CircledLowercaseAlphabet:
+                return NumberType1.CIRCLED_LATIN_SMALL;
+            case Hangul:
+                return NumberType1.HANGUL_SYLLABLE;
+            case CircledHangul:
+                return NumberType1.CIRCLED_HANGUL_SYLLABLE;
+            case HangulJamo:
+                return NumberType1.HANGUL_JAMO;
+            case CircledHangulJamo:
+                return NumberType1.CIRCLED_HANGUL_JAMO;
+            case HangulNumber:
+                return NumberType1.HANGUL_PHONETIC;
+            case HanjaNumber:
+                return NumberType1.IDEOGRAPH;
+            case CircledHanjaNumber:
+                return NumberType1.CIRCLED_IDEOGRAPH;
+            default:
+                return NumberType1.DIGIT;
+        }
+    }
+
 }
 

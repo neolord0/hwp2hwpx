@@ -3,6 +3,7 @@ package kr.dogfoot.hwp2hwpx.section;
 import kr.dogfoot.hwp2hwpx.Converter;
 import kr.dogfoot.hwp2hwpx.Parameter;
 import kr.dogfoot.hwp2hwpx.util.ValueConvertor;
+import kr.dogfoot.hwplib.object.bodytext.control.*;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.textbox.LineChange;
 import kr.dogfoot.hwplib.object.bodytext.control.table.Cell;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
@@ -10,6 +11,7 @@ import kr.dogfoot.hwplib.object.bodytext.paragraph.ParagraphList;
 import kr.dogfoot.hwpxlib.object.content.section_xml.SubList;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.LineWrapMethod;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.TextDirection;
+import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.ctrl.*;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.shapeobject.Caption;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.table.Tc;
 
@@ -82,9 +84,98 @@ public class ForSubList extends Converter {
                 .textHeightAnd(0)
                 .hasTextRefAnd(false)
                 .hasNumRef(false);
-
         // todo : linkListIDRef, linkListNextIDRef, textHeight, hasTextRef, hasNumRef ??
 
         paraList(tc.subList(), hwpCell.getParagraphList());
+    }
+
+    public void convertForHeader(Header header, ControlHeader hwpHeader) {
+        header.createSubList();
+        header.subList()
+                .idAnd("")
+                .textDirectionAnd(textDirection(hwpHeader.getListHeader().getProperty().getTextDirection()))
+                .lineWrapAnd(lineWrapMethod(hwpHeader.getListHeader().getProperty().getLineChange()))
+                .vertAlignAnd(ValueConvertor.verticalAlign2(hwpHeader.getListHeader().getProperty().getTextVerticalAlignment()))
+                .linkListIDRefAnd(String.valueOf(0))
+                .linkListNextIDRefAnd(String.valueOf(0))
+                .textWidthAnd((int) hwpHeader.getListHeader().getTextWidth())
+                .textHeightAnd((int) hwpHeader.getListHeader().getTextHeight())
+                .hasTextRefAnd(false)
+                .hasNumRef(false);
+        // todo : linkListIDRef, linkListNextIDRef, hasTextRef, hasNumRef ??
+
+        paraList(header.subList(), hwpHeader.getParagraphList());
+    }
+
+    public void convertForFooter(Footer footer, ControlFooter hwpFooter) {
+        footer.createSubList();
+        footer.subList()
+                .idAnd("")
+                .textDirectionAnd(textDirection(hwpFooter.getListHeader().getProperty().getTextDirection()))
+                .lineWrapAnd(lineWrapMethod(hwpFooter.getListHeader().getProperty().getLineChange()))
+                .vertAlignAnd(ValueConvertor.verticalAlign2(hwpFooter.getListHeader().getProperty().getTextVerticalAlignment()))
+                .linkListIDRefAnd(String.valueOf(0))
+                .linkListNextIDRefAnd(String.valueOf(0))
+                .textWidthAnd((int) hwpFooter.getListHeader().getTextWidth())
+                .textHeightAnd((int) hwpFooter.getListHeader().getTextHeight())
+                .hasTextRefAnd(false)
+                .hasNumRef(false);
+        // todo : linkListIDRef, linkListNextIDRef, hasTextRef, hasNumRef ??
+
+        paraList(footer.subList(), hwpFooter.getParagraphList());
+    }
+
+    public void convertForFootnote(FootNote footnote, ControlFootnote hwpFootnote) {
+        footnote.createSubList();
+        footnote.subList()
+                .idAnd("")
+                .textDirectionAnd(textDirection(hwpFootnote.getListHeader().getProperty().getTextDirection()))
+                .lineWrapAnd(lineWrapMethod(hwpFootnote.getListHeader().getProperty().getLineChange()))
+                .vertAlignAnd(ValueConvertor.verticalAlign2(hwpFootnote.getListHeader().getProperty().getTextVerticalAlignment()))
+                .linkListIDRefAnd(String.valueOf(0))
+                .linkListNextIDRefAnd(String.valueOf(0))
+                .textWidthAnd(0)
+                .textHeightAnd(0)
+                .hasTextRefAnd(false)
+                .hasNumRef(false);
+        // todo : linkListIDRef, linkListNextIDRef, hasTextRef, hasNumRef ??
+
+        paraList(footnote.subList(), hwpFootnote.getParagraphList());
+    }
+
+    public void convertForEndnote(EndNote endnote, ControlEndnote hwpEndnote) {
+        endnote.createSubList();
+        endnote.subList()
+                .idAnd("")
+                .textDirectionAnd(textDirection(hwpEndnote.getListHeader().getProperty().getTextDirection()))
+                .lineWrapAnd(lineWrapMethod(hwpEndnote.getListHeader().getProperty().getLineChange()))
+                .vertAlignAnd(ValueConvertor.verticalAlign2(hwpEndnote.getListHeader().getProperty().getTextVerticalAlignment()))
+                .linkListIDRefAnd(String.valueOf(0))
+                .linkListNextIDRefAnd(String.valueOf(0))
+                .textWidthAnd(0)
+                .textHeightAnd(0)
+                .hasTextRefAnd(false)
+                .hasNumRef(false);
+        // todo : linkListIDRef, linkListNextIDRef, hasTextRef, hasNumRef ??
+
+        paraList(endnote.subList(), hwpEndnote.getParagraphList());
+    }
+
+    public void convertForHiddenComment(HiddenComment hiddenComment, ControlHiddenComment hwpHiddenComment) {
+        hiddenComment.createSubList();
+        hiddenComment.subList()
+                .idAnd("")
+                .textDirectionAnd(textDirection(hwpHiddenComment.getListHeader().getProperty().getTextDirection()))
+                .lineWrapAnd(lineWrapMethod(hwpHiddenComment.getListHeader().getProperty().getLineChange()))
+                .vertAlignAnd(ValueConvertor.verticalAlign2(hwpHiddenComment.getListHeader().getProperty().getTextVerticalAlignment()))
+                .linkListIDRefAnd(String.valueOf(0))
+                .linkListNextIDRefAnd(String.valueOf(0))
+                .textWidthAnd(0)
+                .textHeightAnd(0)
+                .hasTextRefAnd(false)
+                .hasNumRef(false);
+        // todo : linkListIDRef, linkListNextIDRef,  hasTextRef, hasNumRef ??
+
+        paraList(hiddenComment.subList(), hwpHiddenComment.getParagraphList());
     }
 }

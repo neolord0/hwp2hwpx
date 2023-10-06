@@ -15,7 +15,7 @@ public class ForPara extends Converter {
 
     public void convert(Para para, Paragraph hwpPara) {
         para
-                .idAnd("0")
+                .idAnd(String.valueOf(ValueConvertor.toUnsigned(hwpPara.getHeader().getInstanceID())))
                 .paraPrIDRefAnd(ValueConvertor.refID(hwpPara.getHeader().getParaShapeId()))
                 .styleIDRefAnd(ValueConvertor.refID(hwpPara.getHeader().getStyleId()))
                 .pageBreakAnd(hwpPara.getHeader().getDivideSort().isDividePage())

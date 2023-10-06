@@ -1,9 +1,8 @@
 package kr.dogfoot.hwp2hwpx.section;
 
-import com.sun.jmx.snmp.agent.SnmpUserDataFactory;
 import kr.dogfoot.hwp2hwpx.Converter;
 import kr.dogfoot.hwp2hwpx.Parameter;
-import kr.dogfoot.hwp2hwpx.section.object.ForTable;
+import kr.dogfoot.hwp2hwpx.section.object.*;
 import kr.dogfoot.hwplib.object.bodytext.control.*;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.text.*;
@@ -18,7 +17,6 @@ public class ForChars extends Converter {
     int runCount;
     int runIndex;
     private Run currentRun;
-    private Ctrl currentCtrl;
     private StringBuilder textBuffer;
     private T currentT;
     private ForInlineControl inlineControlConvert;
@@ -66,7 +64,6 @@ public class ForChars extends Converter {
 
             if (isNextRun(charPosition)) {
                 nextRun();
-                endCtrl();
                 endT();
             }
         }
@@ -85,7 +82,6 @@ public class ForChars extends Converter {
     }
 
     private void normal(HWPCharNormal hwpChar) {
-        endCtrl();
         startT();
 
         try {
@@ -154,10 +150,9 @@ public class ForChars extends Converter {
     private void inlineControl(HWPCharControlInline hwpChar) {
         endT();
         if (hwpChar.getCode() == 4) {
-            startCtrl();
-            inlineControlConvert.fieldEnd(currentCtrl.addNewFieldEnd(), hwpChar);
+            inlineControlConvert.fieldEnd(currentRun.addNewCtrl().addNewFieldEnd(), hwpChar);
         } else {
-            endCtrl();
+
         }
         System.out.println("IC: " + para.getRunIndex(currentRun) + " " + hwpChar.getCode());
     }
@@ -167,12 +162,10 @@ public class ForChars extends Converter {
 
         Control hwpControl = hwpPara.getControlList().get(extendControlIndex);
         if (hwpControl.isField()) {
-            startCtrl();
-            new ForFieldBegin(parameter).convent(currentCtrl.addNewFieldBegin(), (ControlField) hwpControl);
+            new ForFieldBegin(parameter).convent(currentRun.addNewCtrl().addNewFieldBegin(), (ControlField) hwpControl);
         } else {
             switch (hwpControl.getType()) {
                 case Table:
-                    endCtrl();
                     new ForTable(parameter).convert(currentRun.addNewTable(), (ControlTable) hwpControl);
                     break;
                 case Gso:
@@ -180,56 +173,57 @@ public class ForChars extends Converter {
                 case Equation:
                     break;
                 case SectionDefine:
-                    endCtrl();
                     currentRun.createSecPr();
                     new ForSecPr(parameter).convert(currentRun.secPr(), (ControlSectionDefine) hwpControl);
                     break;
                 case ColumnDefine:
-                    startCtrl();
-                    ForColPr.convert(currentCtrl.addNewColPr(), (ControlColumnDefine) hwpControl);
+                    ForColPr.convert(currentRun.addNewCtrl().addNewColPr(), (ControlColumnDefine) hwpControl);
                     break;
                 case Header:
+                    new ForHeader(parameter).convert(currentRun.addNewCtrl().addNewHeader(), (ControlHeader) hwpControl);
                     break;
                 case Footer:
+                    new ForFooter(parameter).convert(currentRun.addNewCtrl().addNewFooter(), (ControlFooter) hwpControl);
                     break;
                 case Footnote:
+                    new ForFootnote(parameter).convert(currentRun.addNewCtrl().addNewFootNote(), (ControlFootnote) hwpControl);
                     break;
                 case Endnote:
+                    new ForEndnote(parameter).convert(currentRun.addNewCtrl().addNewEndNote(), (ControlEndnote) hwpControl);
                     break;
                 case AutoNumber:
+                    ForAutoNum.convert(currentRun.addNewCtrl().addNewAutoNum(), (ControlAutoNumber) hwpControl);
                     break;
                 case NewNumber:
+                    ForNewNum.convert(currentRun.addNewCtrl().addNewNewNum(), (ControlNewNumber) hwpControl);
                     break;
                 case PageHide:
-                    break;
+                    ForPageHiding.convert(currentRun.addNewCtrl().addNewPageHiding(), (ControlPageHide) hwpControl);
                 case PageOddEvenAdjust:
+                    // todo : ??
                     break;
                 case PageNumberPosition:
+                    ForPageNum.convert(currentRun.addNewCtrl().addNewPageNum(), (ControlPageNumberPosition) hwpControl);
                     break;
                 case IndexMark:
+                    // todo : ??
                     break;
                 case Bookmark:
+                    ForBookmark.convert(currentRun.addNewCtrl().addNewBookmark(), (ControlBookmark) hwpControl);
                     break;
                 case OverlappingLetter:
+                    ForCompose.convert(currentRun.addNewCompose(), (ControlOverlappingLetter) hwpControl);
                     break;
                 case AdditionalText:
+                    ForDutmal.convert(currentRun.addNewDutmal(), (ControlAdditionalText) hwpControl);
                     break;
                 case HiddenComment:
+                    new ForSubList(parameter).convertForHiddenComment(currentRun.addNewCtrl().addNewHiddenComment(), (ControlHiddenComment) hwpControl);
                     break;
                 case Form:
                     break;
             }
         }
-    }
-
-    private void startCtrl() {
-        if (currentCtrl == null) {
-            currentCtrl = currentRun.addNewCtrl();
-        }
-    }
-
-    private void endCtrl() {
-        currentCtrl = null;
     }
 
     private void startT() {

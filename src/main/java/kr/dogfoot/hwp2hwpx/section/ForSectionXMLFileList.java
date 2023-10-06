@@ -25,16 +25,6 @@ public class ForSectionXMLFileList extends Converter {
             hwpSection = section;
             section();
         }
-        setFirstParaId();
-    }
-
-    private void setFirstParaId() {
-        if (parameter.hwpx().sectionXMLFileList().count() > 0) {
-            SectionXMLFile firstSection = parameter.hwpx().sectionXMLFileList().get(0);
-            if (firstSection.countOfPara() > 0) {
-                firstSection.getPara(0).id("2764991984");
-            }
-        }
     }
 
     private void section() {
