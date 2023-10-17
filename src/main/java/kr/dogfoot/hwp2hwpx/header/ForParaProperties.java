@@ -14,7 +14,8 @@ import kr.dogfoot.hwpxlib.object.common.compatibility.Switch;
 import kr.dogfoot.hwpxlib.object.content.header_xml.RefList;
 import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.*;
 import kr.dogfoot.hwpxlib.object.content.header_xml.references.ParaPr;
-import kr.dogfoot.hwpxlib.object.content.header_xml.references.parapr.*;
+import kr.dogfoot.hwpxlib.object.content.header_xml.references.parapr.LineSpacing;
+import kr.dogfoot.hwpxlib.object.content.header_xml.references.parapr.ParaMargin;
 
 import java.util.ArrayList;
 

@@ -6,9 +6,6 @@ import kr.dogfoot.hwplib.object.bodytext.paragraph.text.HWPCharControlInline;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.ctrl.FieldBegin;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.ctrl.FieldEnd;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-
 public class ForInlineControl extends Converter {
     public ForInlineControl(Parameter parameter) {
         super(parameter);

@@ -7,7 +7,6 @@ import kr.dogfoot.hwpxlib.object.HWPXFile;
 import kr.dogfoot.hwpxlib.writer.HWPXWriter;
 import org.junit.Assert;
 import org.junit.Test;
-import sun.org.mozilla.javascript.internal.ast.Yield;
 
 import java.nio.charset.StandardCharsets;
 

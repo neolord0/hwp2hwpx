@@ -1,7 +1,6 @@
 package kr.dogfoot.hwp2hwpx.section.object;
 
 import kr.dogfoot.hwplib.object.bodytext.control.ControlPageHide;
-import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.ctrl.Header;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.ctrl.PageHiding;
 
 public class ForPageHiding {

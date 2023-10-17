@@ -1,8 +1,11 @@
 package kr.dogfoot.hwp2hwpx.util;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.autonumber.NumberSort;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.header.HeaderFooterApplyPage;
+import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.lineinfo.LineArrowShape;
+import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.lineinfo.LineArrowSize;
+import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.lineinfo.LineEndShape;
+import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.lineinfo.LineType;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.textbox.TextVerticalAlignment;
 import kr.dogfoot.hwplib.object.bodytext.control.sectiondefine.NumberShape;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.BorderThickness;
@@ -344,6 +347,11 @@ public class ValueConvertor {
         return temp & 0xffffffffL;
     }
 
+    public static short toUnsigned(byte value) {
+        short temp = (short) value;
+        return (short) (temp & 0xffL);
+    }
+
     public static NumType toNumType(NumberSort hwpNumberSort) {
         switch (hwpNumberSort) {
             case Page:
@@ -399,5 +407,106 @@ public class ValueConvertor {
         }
     }
 
+    public static LineType2 lineType2(LineType hwpLineType) {
+        switch (hwpLineType) {
+            case None:
+                return LineType2.NONE;
+            case Solid:
+                return LineType2.SOLID;
+            case Dash:
+                // dash => dot으로 씀...
+                return LineType2.DOT;
+            case Dot:
+                // dot => dash으로 씀 ??
+                return LineType2.DASH;
+            case DashDot:
+                return LineType2.DASH_DOT;
+            case DashDotDot:
+                return LineType2.DASH_DOT_DOT;
+            case LongDash:
+                return LineType2.LONG_DASH;
+            case CircleDot:
+                return LineType2.CIRCLE;
+            case Double:
+                return LineType2.DOUBLE_SLIM;
+            case ThinBold:
+                return LineType2.SLIM_THICK;
+            case BoldThin:
+                return LineType2.THICK_SLIM;
+            case ThinBoldThin:
+                return LineType2.SLIM_THICK_SLIM;
+            default:
+                return LineType2.NONE;
+        }
+    }
+
+    public static LineCap lineCap(LineEndShape hwpLineEndShape) {
+        switch (hwpLineEndShape) {
+            case Round:
+                return LineCap.ROUND;
+            case Flat:
+                return LineCap.FLAT;
+            default:
+                return LineCap.FLAT;
+        }
+    }
+
+    public static ArrowType arrowStyle(LineArrowShape hwpArrowShape) {
+        switch (hwpArrowShape) {
+            case None:
+                return ArrowType.NORMAL;
+            case Arrow:
+                return ArrowType.ARROW;
+            case LinedArrow:
+                return ArrowType.SPEAR;
+            case ConcaveArrow:
+                return ArrowType.CONCAVE_ARROW;
+            case Diamond:
+                return ArrowType.EMPTY_DIAMOND;
+            case Circle:
+                return ArrowType.EMPTY_CIRCLE;
+            case Rectangle:
+                return ArrowType.EMPTY_BOX;
+            default:
+                return ArrowType.NORMAL;
+        }
+   }
+
+    public static boolean arrowFill(LineArrowShape hwpArrowShape) {
+        switch (hwpArrowShape) {
+            case None:
+            case Diamond:
+            case Circle:
+            case Rectangle:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static ArrowSize arrowSize(LineArrowSize hwpArrowSize) {
+        switch (hwpArrowSize) {
+            case SmallSmall:
+                return ArrowSize.SMALL_SMALL;
+            case SmallMiddle:
+                return ArrowSize.SMALL_MEDIUM;
+            case SmallBig:
+                return ArrowSize.SMALL_LARGE;
+            case MiddleSmall:
+                return ArrowSize.MEDIUM_SMALL;
+            case MiddleMiddle:
+                return ArrowSize.MEDIUM_MEDIUM;
+            case MiddleBig:
+                return ArrowSize.MEDIUM_LARGE;
+            case BigSmall:
+                return ArrowSize.LARGE_SMALL;
+            case BigMiddle:
+                return ArrowSize.LARGE_MEDIUM;
+            case BigBig:
+                return ArrowSize.LARGE_LARGE;
+            default:
+                return ArrowSize.SMALL_SMALL;
+        }
+    }
 }
 

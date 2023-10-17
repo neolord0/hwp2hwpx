@@ -1,16 +1,19 @@
 package kr.dogfoot.hwp2hwpx.header.inner;
 
+import kr.dogfoot.hwp2hwpx.Parameter;
 import kr.dogfoot.hwp2hwpx.util.ValueConvertor;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.*;
 import kr.dogfoot.hwplib.object.etc.Color4Byte;
+import kr.dogfoot.hwpxlib.object.common.parameter.Param;
 import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.GradationType;
 import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.HatchStyle;
 import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.ImageBrushMode;
 import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.ImageEffect;
 import kr.dogfoot.hwpxlib.object.content.header_xml.references.borderfill.*;
+import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.Para;
 
 public class ForFillBrush {
-    public static void convert(FillBrush fillBrush, FillInfo hwpFillInfo) {
+    public static void convert(FillBrush fillBrush, FillInfo hwpFillInfo, Parameter parameter) {
         if (hwpFillInfo.getType().hasPatternFill()) {
             fillBrush.createWinBrush();
             winBrush(fillBrush.winBrush(), hwpFillInfo.getPatternFill());
@@ -21,7 +24,22 @@ public class ForFillBrush {
         }
         if (hwpFillInfo.getType().hasImageFill()) {
             fillBrush.createImgBrush();
-            imgBrush(fillBrush.imgBrush(), hwpFillInfo.getImageFill());
+            imgBrush(fillBrush.imgBrush(), hwpFillInfo.getImageFill(), parameter);
+        }
+    }
+
+    public static void convertForDrawingObject(FillBrush fillBrush, FillInfo hwpFillInfo, Parameter parameter) {
+        if (hwpFillInfo.getType().hasPatternFill()) {
+            fillBrush.createWinBrush();
+            winBrushForDrawingObject(fillBrush.winBrush(), hwpFillInfo.getPatternFill());
+        }
+        if (hwpFillInfo.getType().hasGradientFill()) {
+            fillBrush.createGradation();
+            gradation(fillBrush.gradation(), hwpFillInfo.getGradientFill());
+        }
+        if (hwpFillInfo.getType().hasImageFill()) {
+            fillBrush.createImgBrush();
+            imgBrush(fillBrush.imgBrush(), hwpFillInfo.getImageFill(), parameter);
         }
     }
 
@@ -41,6 +59,17 @@ public class ForFillBrush {
         }
     }
 
+    private static void winBrushForDrawingObject(WinBrush winBrush, PatternFill hwpPatternFill) {
+        winBrush
+                .faceColorAnd(ValueConvertor.color(hwpPatternFill.getBackColor()))
+                .hatchColorAnd(ValueConvertor.color(hwpPatternFill.getPatternColor()))
+                .alpha((float) 0);
+        if (hwpPatternFill.getPatternType() != PatternType.None) {
+            winBrush.hatchStyle(hatchStyle(hwpPatternFill.getPatternType()));
+        }
+
+    }
+
     private static HatchStyle hatchStyle(PatternType hwpPatternType) {
         switch (hwpPatternType) {
             case HorizontalLine:
@@ -55,8 +84,9 @@ public class ForFillBrush {
                 return HatchStyle.CROSS;
             case CrossDiagonalLine:
                 return HatchStyle.CROSS_DIAGONAL;
+            default:
+                return null;
         }
-        return HatchStyle.HORIZONTAL;
     }
 
     private static void gradation(Gradation gradation, GradientFill hwpGradientFill) {
@@ -89,11 +119,11 @@ public class ForFillBrush {
         return GradationType.LINEAR;
     }
 
-    private static void imgBrush(ImgBrush imgBrush, ImageFill hwpImageFill) {
+    private static void imgBrush(ImgBrush imgBrush, ImageFill hwpImageFill, Parameter parameter) {
         imgBrush.mode(imageBrushMode(hwpImageFill.getImageFillType()));
         if (hwpImageFill.getPictureInfo() != null) {
             imgBrush.createImg();
-            image(imgBrush.img(), hwpImageFill.getPictureInfo());
+            image(imgBrush.img(), hwpImageFill.getPictureInfo(), parameter);
         }
     }
 
@@ -135,9 +165,9 @@ public class ForFillBrush {
         return ImageBrushMode.CENTER;
     }
 
-    public static void image(Image image, PictureInfo hwpPictureInfo) {
+    public static void image(Image image, PictureInfo hwpPictureInfo, Parameter parameter) {
         image
-                .binaryItemIDRefAnd("image" + hwpPictureInfo.getBinItemID())
+                .binaryItemIDRefAnd(parameter.binDataIdMap().get(hwpPictureInfo.getBinItemID()))
                 .brightAnd((int) hwpPictureInfo.getBrightness())
                 .contrastAnd((int) hwpPictureInfo.getContrast())
                 .effectAnd(imageEffect(hwpPictureInfo.getEffect()))

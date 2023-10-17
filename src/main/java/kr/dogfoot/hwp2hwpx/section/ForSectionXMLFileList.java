@@ -5,9 +5,6 @@ import kr.dogfoot.hwp2hwpx.Parameter;
 import kr.dogfoot.hwplib.object.bodytext.Section;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
 import kr.dogfoot.hwpxlib.object.content.section_xml.SectionXMLFile;
-import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.Para;
-
-import java.util.ArrayList;
 
 public class ForSectionXMLFileList extends Converter {
     private SectionXMLFile sectionXMLFile;

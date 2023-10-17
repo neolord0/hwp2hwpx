@@ -2,14 +2,13 @@ package kr.dogfoot.hwp2hwpx.section.object.comm;
 
 import kr.dogfoot.hwp2hwpx.Converter;
 import kr.dogfoot.hwp2hwpx.Parameter;
-import kr.dogfoot.hwp2hwpx.section.ForSubList;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.CtrlHeaderGso;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.*;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.caption.Caption;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.caption.CaptionDirection;
-import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.*;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.HorzRelTo;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.VertRelTo;
+import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.*;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.shapeobject.ShapeObject;
 
 public class ForShapeObject extends Converter {
@@ -215,7 +214,7 @@ public class ForShapeObject extends Converter {
                     .gapAnd((long) hwpCaption.getListHeader().getSpaceBetweenCaptionAndFrame())
                     .lastWidth(hwpCaption.getListHeader().getTextWidth());
 
-            new ForSubList(parameter).convertForCaption(shapeObject.caption(), hwpCaption);
+            parameter.subListConverter().convertForCaption(shapeObject.caption(), hwpCaption);
         }
     }
 

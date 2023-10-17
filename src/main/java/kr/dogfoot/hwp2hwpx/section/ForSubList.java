@@ -5,22 +5,25 @@ import kr.dogfoot.hwp2hwpx.Parameter;
 import kr.dogfoot.hwp2hwpx.util.ValueConvertor;
 import kr.dogfoot.hwplib.object.bodytext.control.*;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.textbox.LineChange;
+import kr.dogfoot.hwplib.object.bodytext.control.gso.textbox.TextBox;
 import kr.dogfoot.hwplib.object.bodytext.control.table.Cell;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.ParagraphList;
 import kr.dogfoot.hwpxlib.object.content.section_xml.SubList;
+import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.DrawingShadowType;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.LineWrapMethod;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.TextDirection;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.ctrl.*;
+import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.drawingobject.DrawText;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.shapeobject.Caption;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.table.Tc;
 
 public class ForSubList extends Converter {
-    private ForPara forPara;
+    private ForPara paraConverter;
 
     public ForSubList(Parameter parameter) {
         super(parameter);
-        forPara = new ForPara(parameter);
+        paraConverter = new ForPara(parameter);
     }
 
     public void convertForCaption(Caption caption, kr.dogfoot.hwplib.object.bodytext.control.gso.caption.Caption hwpCaption) {
@@ -43,7 +46,7 @@ public class ForSubList extends Converter {
 
     private void paraList(SubList subList, ParagraphList paragraphList) {
         for (Paragraph hwpPara : paragraphList) {
-            forPara.convert(subList.addNewPara(), hwpPara);
+            paraConverter.convert(subList.addNewPara(), hwpPara);
         }
     }
 
@@ -177,5 +180,23 @@ public class ForSubList extends Converter {
         // todo : linkListIDRef, linkListNextIDRef,  hasTextRef, hasNumRef ??
 
         paraList(hiddenComment.subList(), hwpHiddenComment.getParagraphList());
+    }
+
+    public void convertForDrawText(DrawText drawText, TextBox hwpTextBox) {
+        drawText.createSubList();
+        drawText.subList()
+                .idAnd("")
+                .textDirectionAnd(textDirection(hwpTextBox.getListHeader().getProperty().getTextDirection()))
+                .lineWrapAnd(lineWrapMethod(hwpTextBox.getListHeader().getProperty().getLineChange()))
+                .vertAlignAnd(ValueConvertor.verticalAlign2(hwpTextBox.getListHeader().getProperty().getTextVerticalAlignment()))
+                .linkListIDRefAnd(String.valueOf(0))
+                .linkListNextIDRefAnd(String.valueOf(0))
+                .textWidthAnd(0)
+                .textHeightAnd(0)
+                .hasTextRefAnd(false)
+                .hasNumRef(false);
+        // todo : linkListIDRef, linkListNextIDRef,  hasTextRef, hasNumRef ??
+
+        paraList(drawText.subList(), hwpTextBox.getParagraphList());
     }
 }

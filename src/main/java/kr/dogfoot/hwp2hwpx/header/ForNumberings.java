@@ -2,7 +2,6 @@ package kr.dogfoot.hwp2hwpx.header;
 
 import kr.dogfoot.hwp2hwpx.Converter;
 import kr.dogfoot.hwp2hwpx.Parameter;
-
 import kr.dogfoot.hwp2hwpx.util.ValueConvertor;
 import kr.dogfoot.hwplib.object.docinfo.numbering.LevelNumbering;
 import kr.dogfoot.hwplib.object.docinfo.numbering.ParagraphAlignment;

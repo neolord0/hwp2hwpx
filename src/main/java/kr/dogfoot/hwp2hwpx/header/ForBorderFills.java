@@ -58,7 +58,7 @@ public class ForBorderFills extends Converter {
 
         if (HWPUtil.hasFillInfo(hwpBorderFill.getFillInfo())) {
             borderFill.createFillBrush();
-            ForFillBrush.convert(borderFill.fillBrush(), hwpBorderFill.getFillInfo());
+            ForFillBrush.convert(borderFill.fillBrush(), hwpBorderFill.getFillInfo(), parameter);
         }
     }
 

@@ -1,35 +1,27 @@
 package kr.dogfoot.hwp2hwpx.section.object;
 
-import kr.dogfoot.hwp2hwpx.Converter;
 import kr.dogfoot.hwp2hwpx.Parameter;
-import kr.dogfoot.hwp2hwpx.section.ForSubList;
 import kr.dogfoot.hwp2hwpx.section.object.comm.ForShapeObject;
 import kr.dogfoot.hwp2hwpx.util.ValueConvertor;
 import kr.dogfoot.hwplib.object.bodytext.control.ControlTable;
-import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.CtrlHeaderGso;
-import kr.dogfoot.hwplib.object.bodytext.control.gso.caption.Caption;
 import kr.dogfoot.hwplib.object.bodytext.control.table.Cell;
 import kr.dogfoot.hwplib.object.bodytext.control.table.DivideAtPageBoundary;
 import kr.dogfoot.hwplib.object.bodytext.control.table.Row;
 import kr.dogfoot.hwplib.object.bodytext.control.table.ZoneInfo;
-import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.DropCapStyle;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.TablePageBreak;
-import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.Para;
-import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.T;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.Table;
-import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.shapeobject.ShapeObject;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.table.CellZone;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.table.Tr;
 
 public class ForTable extends ForShapeObject {
     private Table table;
     private ControlTable hwpTable;
-    private ForCell forCell;
+    private ForCell cellConverter;
 
     public ForTable(Parameter parameter) {
         super(parameter);
 
-        forCell = new ForCell(parameter);
+        cellConverter = new ForCell(parameter);
     }
 
     public void convert(Table table, ControlTable hwpTable) {
@@ -97,7 +89,7 @@ public class ForTable extends ForShapeObject {
             Tr tr = table.addNewTr();
 
             for (Cell hwpCell : hwpRow.getCellList()) {
-                forCell.convert(tr.addNewTc(), hwpCell);
+                cellConverter.convert(tr.addNewTc(), hwpCell);
             }
         }
     }

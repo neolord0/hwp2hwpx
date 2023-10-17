@@ -41,7 +41,7 @@ public class ForBullets extends Converter {
 
         if (hwpBullet.getImageBullet()) {
             bullet.createImg();
-            ForFillBrush.image(bullet.img(), hwpBullet.getImageBulletInfo());
+            ForFillBrush.image(bullet.img(), hwpBullet.getImageBulletInfo(), parameter);
         }
 
         bullet.createParaHead();

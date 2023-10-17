@@ -2,7 +2,6 @@ package kr.dogfoot.hwp2hwpx.section.object;
 
 import kr.dogfoot.hwp2hwpx.Converter;
 import kr.dogfoot.hwp2hwpx.Parameter;
-import kr.dogfoot.hwp2hwpx.section.ForSubList;
 import kr.dogfoot.hwp2hwpx.util.ValueConvertor;
 import kr.dogfoot.hwplib.object.bodytext.control.table.Cell;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.table.Tc;
@@ -33,7 +32,7 @@ public class ForCell extends Converter {
         cellSpan();
         cellSz();
         cellMargin();
-        new ForSubList(parameter).convertForCell(tc, hwpCell);
+        parameter.subListConverter().convertForCell(tc, hwpCell);
     }
 
     private void cellAddr() {

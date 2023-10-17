@@ -1,5 +1,6 @@
 package kr.dogfoot.hwp2hwpx;
 
+import kr.dogfoot.hwp2hwpx.section.ForSubList;
 import kr.dogfoot.hwp2hwpx.util.HWPUtil;
 import kr.dogfoot.hwplib.object.HWPFile;
 import kr.dogfoot.hwplib.object.bindata.BinData;
@@ -31,6 +32,8 @@ public class Parameter {
     private Map<Integer, String> binDataIdMap;
     private Stack<FieldBegin> fieldBeginStack;
 
+    private ForSubList subListConverter;
+
     public Parameter(HWPFile hwpFile, HWPXFile hwpxFile) {
         hwpInfo = new HWPInfo(hwpFile);
         hwpxInfo = new HWPXInfo(hwpxFile);
@@ -38,6 +41,8 @@ public class Parameter {
         masterPageIdMap = new HashMap<BatangPageInfo, String>();
         binDataIdMap = new HashMap<Integer, String>();
         fieldBeginStack = new Stack<FieldBegin>();
+
+        subListConverter = new ForSubList(this);
     }
 
     public HWPInfo hwp() {
@@ -58,6 +63,10 @@ public class Parameter {
 
     public Stack<FieldBegin> fieldBeginStack() {
         return fieldBeginStack;
+    }
+
+    public ForSubList subListConverter() {
+        return subListConverter;
     }
 
     public static class HWPInfo {

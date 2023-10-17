@@ -4,7 +4,6 @@ import kr.dogfoot.hwp2hwpx.header.ForHeaderXMLFile;
 import kr.dogfoot.hwp2hwpx.section.ForMasterPageXMLFileList;
 import kr.dogfoot.hwp2hwpx.section.ForSectionXMLFileList;
 import kr.dogfoot.hwplib.object.HWPFile;
-import kr.dogfoot.hwplib.object.docinfo.BinData;
 import kr.dogfoot.hwplib.object.docinfo.documentproperties.CaretPosition;
 import kr.dogfoot.hwplib.object.fileheader.FileVersion;
 import kr.dogfoot.hwpxlib.object.HWPXFile;

@@ -3,10 +3,14 @@ package kr.dogfoot.hwp2hwpx.section;
 import kr.dogfoot.hwp2hwpx.Converter;
 import kr.dogfoot.hwp2hwpx.Parameter;
 import kr.dogfoot.hwp2hwpx.section.object.*;
+import kr.dogfoot.hwp2hwpx.section.object.gso.ForGso;
 import kr.dogfoot.hwplib.object.bodytext.control.*;
+import kr.dogfoot.hwplib.object.bodytext.control.gso.GsoControl;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.text.*;
-import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.*;
+import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.Para;
+import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.Run;
+import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.T;
 
 import java.io.UnsupportedEncodingException;
 
@@ -19,12 +23,32 @@ public class ForChars extends Converter {
     private Run currentRun;
     private StringBuilder textBuffer;
     private T currentT;
-    private ForInlineControl inlineControlConvert;
+
+    private ForInlineControl inlineControlConverter;
+    private ForFieldBegin fieldBeginConverter;
+    private ForTable tableConverter;
+    private ForGso gsoConverter;
+    private ForEquation equationConverter;
+    private ForSecPr secPrConverter;
+    private ForHeader headerConverter;
+    private ForFooter footerConverter;
+    private ForFootnote footnoteConverter;
+    private ForEndnote endnoteConverter;
 
     public ForChars(Parameter parameter) {
         super(parameter);
         textBuffer = new StringBuilder();
-        inlineControlConvert = new ForInlineControl(parameter);
+
+        inlineControlConverter = new ForInlineControl(parameter);
+        fieldBeginConverter = new ForFieldBegin(parameter);
+        tableConverter = new ForTable(parameter);
+        gsoConverter = new ForGso(parameter);
+        equationConverter = new ForEquation(parameter);
+        secPrConverter = new ForSecPr(parameter);
+        headerConverter = new ForHeader(parameter);
+        footerConverter = new ForFooter(parameter);
+        footnoteConverter = new ForFootnote(parameter);
+        endnoteConverter = new ForEndnote(parameter);
     }
 
     public void convert(Para para, Paragraph hwpPara) {
@@ -150,11 +174,11 @@ public class ForChars extends Converter {
     private void inlineControl(HWPCharControlInline hwpChar) {
         endT();
         if (hwpChar.getCode() == 4) {
-            inlineControlConvert.fieldEnd(currentRun.addNewCtrl().addNewFieldEnd(), hwpChar);
+            inlineControlConverter.fieldEnd(currentRun.addNewCtrl().addNewFieldEnd(), hwpChar);
         } else {
 
         }
-        System.out.println("IC: " + para.getRunIndex(currentRun) + " " + hwpChar.getCode());
+        // System.out.println("IC: " + para.getRunIndex(currentRun) + " " + hwpChar.getCode());
     }
 
     private void extendControl(HWPCharControlExtend hwpChar, int extendControlIndex) {
@@ -162,34 +186,36 @@ public class ForChars extends Converter {
 
         Control hwpControl = hwpPara.getControlList().get(extendControlIndex);
         if (hwpControl.isField()) {
-            new ForFieldBegin(parameter).convent(currentRun.addNewCtrl().addNewFieldBegin(), (ControlField) hwpControl);
+            fieldBeginConverter.convent(currentRun.addNewCtrl().addNewFieldBegin(), (ControlField) hwpControl);
         } else {
             switch (hwpControl.getType()) {
                 case Table:
-                    new ForTable(parameter).convert(currentRun.addNewTable(), (ControlTable) hwpControl);
+                    tableConverter.convert(currentRun.addNewTable(), (ControlTable) hwpControl);
                     break;
                 case Gso:
+                    gsoConverter.convert(currentRun, (GsoControl) hwpControl);
                     break;
                 case Equation:
+                    equationConverter.convert(currentRun.addNewEquation(), (ControlEquation) hwpControl);
                     break;
                 case SectionDefine:
                     currentRun.createSecPr();
-                    new ForSecPr(parameter).convert(currentRun.secPr(), (ControlSectionDefine) hwpControl);
+                    secPrConverter.convert(currentRun.secPr(), (ControlSectionDefine) hwpControl);
                     break;
                 case ColumnDefine:
                     ForColPr.convert(currentRun.addNewCtrl().addNewColPr(), (ControlColumnDefine) hwpControl);
                     break;
                 case Header:
-                    new ForHeader(parameter).convert(currentRun.addNewCtrl().addNewHeader(), (ControlHeader) hwpControl);
+                    headerConverter.convert(currentRun.addNewCtrl().addNewHeader(), (ControlHeader) hwpControl);
                     break;
                 case Footer:
-                    new ForFooter(parameter).convert(currentRun.addNewCtrl().addNewFooter(), (ControlFooter) hwpControl);
+                    footerConverter.convert(currentRun.addNewCtrl().addNewFooter(), (ControlFooter) hwpControl);
                     break;
                 case Footnote:
-                    new ForFootnote(parameter).convert(currentRun.addNewCtrl().addNewFootNote(), (ControlFootnote) hwpControl);
+                    footnoteConverter.convert(currentRun.addNewCtrl().addNewFootNote(), (ControlFootnote) hwpControl);
                     break;
                 case Endnote:
-                    new ForEndnote(parameter).convert(currentRun.addNewCtrl().addNewEndNote(), (ControlEndnote) hwpControl);
+                    endnoteConverter.convert(currentRun.addNewCtrl().addNewEndNote(), (ControlEndnote) hwpControl);
                     break;
                 case AutoNumber:
                     ForAutoNum.convert(currentRun.addNewCtrl().addNewAutoNum(), (ControlAutoNumber) hwpControl);
@@ -218,7 +244,7 @@ public class ForChars extends Converter {
                     ForDutmal.convert(currentRun.addNewDutmal(), (ControlAdditionalText) hwpControl);
                     break;
                 case HiddenComment:
-                    new ForSubList(parameter).convertForHiddenComment(currentRun.addNewCtrl().addNewHiddenComment(), (ControlHiddenComment) hwpControl);
+                    parameter.subListConverter().convertForHiddenComment(currentRun.addNewCtrl().addNewHiddenComment(), (ControlHiddenComment) hwpControl);
                     break;
                 case Form:
                     break;

@@ -9,8 +9,12 @@ import kr.dogfoot.hwplib.object.bodytext.paragraph.lineseg.LineSegItem;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.Para;
 
 public class ForPara extends Converter {
+    private ForChars charConverter;
+
     public ForPara(Parameter parameter) {
         super(parameter);
+
+        charConverter = new ForChars(parameter);
     }
 
     public void convert(Para para, Paragraph hwpPara) {
@@ -23,7 +27,7 @@ public class ForPara extends Converter {
                 .merged(hwpPara.getHeader().getIsMergedByTrack() != 0);
 
         runs(para, hwpPara);
-        new ForChars(parameter).convert(para, hwpPara);
+        charConverter.convert(para, hwpPara);
         lineSegArray(para, hwpPara);
     }
 
