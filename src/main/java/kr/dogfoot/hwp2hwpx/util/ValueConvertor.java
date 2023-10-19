@@ -508,5 +508,19 @@ public class ValueConvertor {
                 return ArrowSize.SMALL_SMALL;
         }
     }
+
+    public static ArcType arcType(kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponenteach.arc.ArcType hwpArcType) {
+        switch (hwpArcType) {
+            case Arc:
+                return ArcType.NORMAL;
+            case CircularSector:
+                return ArcType.PIE;
+            case Bow:
+                return ArcType.CHORD;
+            default:
+                return ArcType.NORMAL;
+        }
+    }
+
 }
 
