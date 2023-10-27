@@ -31,4 +31,4 @@ public class Line {
             Assert.assertEquals(resultXML, toXML);
         }
     }
-    }
+}

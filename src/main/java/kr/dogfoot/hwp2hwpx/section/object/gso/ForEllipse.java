@@ -8,7 +8,6 @@ import kr.dogfoot.hwp2hwpx.util.ValueConvertor;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.ControlEllipse;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.ShapeComponentNormal;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponenteach.ShapeComponentEllipse;
-import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.ArcType;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.Ellipse;
 
 public class ForEllipse extends ForShapeComponent {

@@ -5,16 +5,11 @@ import kr.dogfoot.hwp2hwpx.header.inner.ForFillBrush;
 import kr.dogfoot.hwp2hwpx.section.object.comm.ForDrawingObject;
 import kr.dogfoot.hwp2hwpx.section.object.comm.ForShapeComponent;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.ControlCurve;
-import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.ShapeComponentContainer;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.ShapeComponentNormal;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponenteach.ShapeComponentCurve;
-import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponenteach.ShapeComponentPolygon;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponenteach.polygon.PositionXY;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.CurveSegmentType;
-import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.PageStartON;
-import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.Para;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.Curve;
-import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.curve.CurveSegment;
 
 public class ForCurve extends ForShapeComponent {
     private Curve curve;

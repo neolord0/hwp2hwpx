@@ -31,5 +31,4 @@ public class Curve {
             Assert.assertEquals(resultXML, toXML);
         }
     }
-
 }

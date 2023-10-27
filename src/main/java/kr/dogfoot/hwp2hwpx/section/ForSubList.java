@@ -10,7 +10,6 @@ import kr.dogfoot.hwplib.object.bodytext.control.table.Cell;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.ParagraphList;
 import kr.dogfoot.hwpxlib.object.content.section_xml.SubList;
-import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.DrawingShadowType;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.LineWrapMethod;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.TextDirection;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.ctrl.*;

@@ -4,13 +4,11 @@ import kr.dogfoot.hwp2hwpx.Parameter;
 import kr.dogfoot.hwp2hwpx.util.ValueConvertor;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.*;
 import kr.dogfoot.hwplib.object.etc.Color4Byte;
-import kr.dogfoot.hwpxlib.object.common.parameter.Param;
 import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.GradationType;
 import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.HatchStyle;
 import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.ImageBrushMode;
 import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.ImageEffect;
 import kr.dogfoot.hwpxlib.object.content.header_xml.references.borderfill.*;
-import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.Para;
 
 public class ForFillBrush {
     public static void convert(FillBrush fillBrush, FillInfo hwpFillInfo, Parameter parameter) {

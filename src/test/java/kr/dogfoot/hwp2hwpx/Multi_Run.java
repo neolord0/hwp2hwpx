@@ -30,6 +30,5 @@ public class Multi_Run {
             String toXML = Util.zipFileString(testPath + "/to.zip", "Contents/section0.xml", StandardCharsets.UTF_8);
             Assert.assertEquals(resultXML, toXML);
         }
-
     }
 }

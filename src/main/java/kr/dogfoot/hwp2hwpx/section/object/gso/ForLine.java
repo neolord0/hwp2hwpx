@@ -3,17 +3,9 @@ package kr.dogfoot.hwp2hwpx.section.object.gso;
 import kr.dogfoot.hwp2hwpx.Parameter;
 import kr.dogfoot.hwp2hwpx.section.object.comm.ForDrawingObject;
 import kr.dogfoot.hwp2hwpx.section.object.comm.ForShapeComponent;
-import kr.dogfoot.hwp2hwpx.util.ValueConvertor;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.ControlLine;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.ShapeComponentNormal;
-import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.lineinfo.LineInfo;
-import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.shadowinfo.ShadowInfo;
-import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.shadowinfo.ShadowType;
-import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.DrawingShadowType;
-import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.OutlineStyle;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.Line;
-import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.drawingobject.DrawingShadow;
-import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.picture.LineShape;
 
 public class ForLine extends ForShapeComponent {
     private Line line;

@@ -8,7 +8,6 @@ import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.shadowinfo.S
 import kr.dogfoot.hwplib.object.bodytext.control.gso.textbox.TextBox;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.DrawingShadowType;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.OutlineStyle;
-import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.VertAlign;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.drawingobject.DrawText;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.drawingobject.DrawingShadow;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.picture.LineShape;

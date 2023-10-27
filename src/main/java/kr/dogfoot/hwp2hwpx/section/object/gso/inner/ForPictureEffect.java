@@ -1,15 +1,13 @@
 package kr.dogfoot.hwp2hwpx.section.object.gso.inner;
 
 import kr.dogfoot.hwp2hwpx.util.ValueConvertor;
-import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponenteach.picture.*;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponenteach.picture.ColorEffect;
+import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponenteach.picture.*;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.AlignStyleType;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.ColorEffectType;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.ColorType;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.ShadowStyle;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.picture.effects.*;
-
-import java.util.Arrays;
 
 public class ForPictureEffect {
     public static void convert(Effects effects, PictureEffect hwpPictureEffect) {

@@ -25,11 +25,19 @@ public class ForShapeObject extends Converter {
         this.hwpGSOHeader = hwpGSOHeader;
         this.hwpCaption = hwpCaption;
 
-        shapeObject.id(String.valueOf(hwpGSOHeader.getInstanceId()));
-        shapeObject.zOrder(hwpGSOHeader.getzOrder());
-        shapeObject.numberingType(numberingType(hwpGSOHeader.getProperty().getObjectNumberSort()));
-        shapeObject.textWrap(textWrapMethod(hwpGSOHeader.getProperty().getTextFlowMethod()));
-        shapeObject.textFlow(textFlowSide(hwpGSOHeader.getProperty().getTextHorzArrange()));
+        if (hwpGSOHeader != null) {
+            shapeObject.id(String.valueOf(hwpGSOHeader.getInstanceId()));
+            shapeObject.zOrder(hwpGSOHeader.getzOrder());
+            shapeObject.numberingType(numberingType(hwpGSOHeader.getProperty().getObjectNumberSort()));
+            shapeObject.textWrap(textWrapMethod(hwpGSOHeader.getProperty().getTextFlowMethod()));
+            shapeObject.textFlow(textFlowSide(hwpGSOHeader.getProperty().getTextHorzArrange()));
+        } else {
+            shapeObject.id(String.valueOf(0));
+            shapeObject.zOrder(0);
+            shapeObject.numberingType(NumberingType.NONE);
+            shapeObject.textWrap(TextWrapMethod.TOP_AND_BOTTOM);
+            shapeObject.textFlow(TextFlowSide.BOTH_SIDES);
+        }
         shapeObject.lock(false);
         shapeObject.dropcapstyle(DropCapStyle.None);
         // todo : lock, dropcapstyle ??
@@ -84,13 +92,15 @@ public class ForShapeObject extends Converter {
     }
 
     private void sz() {
-        shapeObject.createSZ();
-        shapeObject.sz()
-                .widthAnd(hwpGSOHeader.getWidth())
-                .widthRelToAnd(widthRelTo(hwpGSOHeader.getProperty().getWidthCriterion()))
-                .heightAnd(hwpGSOHeader.getHeight())
-                .heightRelToAnd(heightRelTo(hwpGSOHeader.getProperty().getHeightCriterion()))
-                .protect(hwpGSOHeader.getProperty().isProtectSize());
+        if (hwpGSOHeader != null) {
+            shapeObject.createSZ();
+            shapeObject.sz()
+                    .widthAnd(hwpGSOHeader.getWidth())
+                    .widthRelToAnd(widthRelTo(hwpGSOHeader.getProperty().getWidthCriterion()))
+                    .heightAnd(hwpGSOHeader.getHeight())
+                    .heightRelToAnd(heightRelTo(hwpGSOHeader.getProperty().getHeightCriterion()))
+                    .protect(hwpGSOHeader.getProperty().isProtectSize());
+        }
     }
 
     private WidthRelTo widthRelTo(WidthCriterion hwpWidthCriterion) {
@@ -122,20 +132,22 @@ public class ForShapeObject extends Converter {
     }
 
     private void pos() {
-        shapeObject.createPos();
-        shapeObject.pos()
-                .treatAsCharAnd(hwpGSOHeader.getProperty().isLikeWord())
-                .affectLSpacingAnd(hwpGSOHeader.getProperty().isApplyLineSpace())
-                .flowWithTextAnd(hwpGSOHeader.getProperty().isVertRelToParaLimit())
-                .allowOverlapAnd(hwpGSOHeader.getProperty().isAllowOverlap())
-                .holdAnchorAndSOAnd(false)
-                .vertRelToAnd(vertRelTo(hwpGSOHeader.getProperty().getVertRelTo()))
-                .horzRelToAnd(horzRelTo(hwpGSOHeader.getProperty().getHorzRelTo()))
-                .vertAlignAnd(vertAlign(hwpGSOHeader.getProperty().getVertRelativeArrange()))
-                .horzAlignAnd(horzAlign(hwpGSOHeader.getProperty().getHorzRelativeArrange()))
-                .vertOffsetAnd(hwpGSOHeader.getyOffset())
-                .horzOffset(hwpGSOHeader.getxOffset());
-        // todo : holdAnchorAndSO
+        if (hwpGSOHeader != null) {
+            shapeObject.createPos();
+            shapeObject.pos()
+                    .treatAsCharAnd(hwpGSOHeader.getProperty().isLikeWord())
+                    .affectLSpacingAnd(hwpGSOHeader.getProperty().isApplyLineSpace())
+                    .flowWithTextAnd(hwpGSOHeader.getProperty().isVertRelToParaLimit())
+                    .allowOverlapAnd(hwpGSOHeader.getProperty().isAllowOverlap())
+                    .holdAnchorAndSOAnd(false)
+                    .vertRelToAnd(vertRelTo(hwpGSOHeader.getProperty().getVertRelTo()))
+                    .horzRelToAnd(horzRelTo(hwpGSOHeader.getProperty().getHorzRelTo()))
+                    .vertAlignAnd(vertAlign(hwpGSOHeader.getProperty().getVertRelativeArrange()))
+                    .horzAlignAnd(horzAlign(hwpGSOHeader.getProperty().getHorzRelativeArrange()))
+                    .vertOffsetAnd(hwpGSOHeader.getyOffset())
+                    .horzOffset(hwpGSOHeader.getxOffset());
+            // todo : holdAnchorAndSO
+        }
     }
 
     private VertRelTo vertRelTo(kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.VertRelTo hwpVertRelTo) {
@@ -196,16 +208,18 @@ public class ForShapeObject extends Converter {
         return HorzAlign.LEFT;
     }
     private void outMargin() {
-        shapeObject.createOutMargin();
-        shapeObject.outMargin()
-                .leftAnd((long) hwpGSOHeader.getOutterMarginLeft())
-                .rightAnd((long) hwpGSOHeader.getOutterMarginRight())
-                .topAnd((long) hwpGSOHeader.getOutterMarginTop())
-                .bottom((long) hwpGSOHeader.getOutterMarginBottom());
+        if (hwpGSOHeader != null) {
+            shapeObject.createOutMargin();
+            shapeObject.outMargin()
+                    .leftAnd((long) hwpGSOHeader.getOutterMarginLeft())
+                    .rightAnd((long) hwpGSOHeader.getOutterMarginRight())
+                    .topAnd((long) hwpGSOHeader.getOutterMarginTop())
+                    .bottom((long) hwpGSOHeader.getOutterMarginBottom());
+        }
     }
 
     private void caption() {
-        if (hwpGSOHeader.getProperty().hasCaption() && hwpCaption != null) {
+        if (hwpGSOHeader != null && hwpGSOHeader.getProperty().hasCaption() && hwpCaption != null) {
             shapeObject.createCaption();
             shapeObject.caption()
                     .sideAnd(captionSide(hwpCaption.getListHeader().getCaptionProperty().getDirection()))
@@ -234,11 +248,13 @@ public class ForShapeObject extends Converter {
 
 
     private void shapeComment() {
-        String hwpExplanation = hwpGSOHeader.getExplanation().toUTF16LEString();
-        if (hwpExplanation != null && hwpExplanation.length() > 0) {
-            shapeObject.createShapeComment();
-            shapeObject.shapeComment()
-                    .addText(hwpExplanation);
+        if (hwpGSOHeader != null) {
+            String hwpExplanation = hwpGSOHeader.getExplanation().toUTF16LEString();
+            if (hwpExplanation != null && hwpExplanation.length() > 0) {
+                shapeObject.createShapeComment();
+                shapeObject.shapeComment()
+                        .addText(hwpExplanation);
+            }
         }
     }
 }

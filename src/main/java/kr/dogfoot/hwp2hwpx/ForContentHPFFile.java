@@ -115,19 +115,27 @@ public class ForContentHPFFile extends Converter {
     }
 
     private void binData(int binDataId, BinData binData) {
-        String id = "image" + binDataId;
+        String id = makeBinDataID(binDataId, binData);
         if (binData.getProperty().getType() == BinDataType.Link) {
             addNewManifestItemForLink(id,
                     binData.getAbsolutePathForLink(),
                     HWPUtil.mediaTypeFromFilepath(binData.getAbsolutePathForLink()));
         } else {
-            addNewManifestItemForLinkForEmbedding(id,
+            addNewManifestItemForEmbedding(id,
                     hrefForEmbedding(id, binData.getExtensionForEmbedding()),
                     HWPUtil.mediaType(binData.getExtensionForEmbedding()),
                     parameter.hwp().binData().getEmbeddedBinaryDataList().get(binDataId - 1));
          }
 
         parameter.binDataIdMap().put(binDataId, id);
+    }
+
+    private String makeBinDataID(int binDataId, BinData binData) {
+        if (binData.getExtensionForEmbedding().equalsIgnoreCase("OLE")) {
+            return "ole" + binDataId;
+        } else {
+            return "image" + binDataId;
+        }
     }
 
     private void addNewManifestItemForLink(String id, String href, String mediaType) {
@@ -147,7 +155,7 @@ public class ForContentHPFFile extends Converter {
                 .toString();
     }
 
-    private void addNewManifestItemForLinkForEmbedding(String id, String href, String mediaType, EmbeddedBinaryData embeddedBinaryData) {
+    private void addNewManifestItemForEmbedding(String id, String href, String mediaType, EmbeddedBinaryData embeddedBinaryData) {
         ManifestItem manifestItem = contentHPFFile.manifest().addNew()
                 .idAnd(id)
                 .hrefAnd(href)

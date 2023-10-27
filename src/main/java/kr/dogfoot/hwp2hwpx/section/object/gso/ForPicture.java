@@ -8,13 +8,8 @@ import kr.dogfoot.hwp2hwpx.util.ValueConvertor;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.ControlPicture;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.lineinfo.LineType;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponenteach.ShapeComponentPicture;
-import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponenteach.picture.NeonEffect;
-import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponenteach.picture.ReflectionEffect;
-import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponenteach.picture.ShadowEffect;
-import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponenteach.picture.SoftEdgeEffect;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.OutlineStyle;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.Picture;
-import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.picture.effects.Effects;
 
 public class ForPicture extends ForShapeComponent {
     private Picture picture;

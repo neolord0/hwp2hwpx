@@ -4,7 +4,6 @@ import kr.dogfoot.hwp2hwpx.Parameter;
 import kr.dogfoot.hwp2hwpx.header.inner.ForFillBrush;
 import kr.dogfoot.hwp2hwpx.section.object.comm.ForDrawingObject;
 import kr.dogfoot.hwp2hwpx.section.object.comm.ForShapeComponent;
-import kr.dogfoot.hwp2hwpx.util.ValueConvertor;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.ControlPolygon;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponent.ShapeComponentNormal;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponenteach.ShapeComponentPolygon;
