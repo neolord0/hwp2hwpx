@@ -38,7 +38,7 @@ public class ForPictureEffect {
                 .directionAnd((short) hwpShadow.getDirection())
                 .distanceAnd(hwpShadow.getDistance())
                 .alignStyleAnd(alignStyleType(hwpShadow.getSort()))
-                .rotationStyleAnd(ValueConvertor.toBoolean((short) hwpShadow.getRotateWithShape()));
+                .rotationStyleAnd(ValueConvertor.bool((short) hwpShadow.getRotateWithShape()));
 
         shadow.createSkew();
         shadow.skew()
@@ -191,7 +191,7 @@ public class ForPictureEffect {
                 .radiusAnd(hwpReflection.getRadius())
                 .directionAnd((int) hwpReflection.getDirection())
                 .distanceAnd(hwpReflection.getDistance())
-                .rotationStyleAnd(ValueConvertor.toBoolean((short) hwpReflection.getRotationStyle()))
+                .rotationStyleAnd(ValueConvertor.bool((short) hwpReflection.getRotationStyle()))
                 .fadeDirectionAnd((int) hwpReflection.getOffsetDirection());
 
         reflection.createSkew();

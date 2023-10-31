@@ -12,9 +12,9 @@ import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.*;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.shapeobject.ShapeObject;
 
 public class ForShapeObject extends Converter {
-    private ShapeObject shapeObject;
-    private CtrlHeaderGso hwpGSOHeader;
-    private Caption hwpCaption;
+    protected ShapeObject shapeObject;
+    protected CtrlHeaderGso hwpGSOHeader;
+    protected Caption hwpCaption;
 
     public ForShapeObject(Parameter parameter) {
         super(parameter);
@@ -91,7 +91,7 @@ public class ForShapeObject extends Converter {
         return TextFlowSide.BOTH_SIDES;
     }
 
-    private void sz() {
+    protected void sz() {
         if (hwpGSOHeader != null) {
             shapeObject.createSZ();
             shapeObject.sz()
@@ -131,7 +131,7 @@ public class ForShapeObject extends Converter {
         return HeightRelTo.PAPER;
     }
 
-    private void pos() {
+    protected void pos() {
         if (hwpGSOHeader != null) {
             shapeObject.createPos();
             shapeObject.pos()
@@ -207,7 +207,7 @@ public class ForShapeObject extends Converter {
         }
         return HorzAlign.LEFT;
     }
-    private void outMargin() {
+    protected void outMargin() {
         if (hwpGSOHeader != null) {
             shapeObject.createOutMargin();
             shapeObject.outMargin()

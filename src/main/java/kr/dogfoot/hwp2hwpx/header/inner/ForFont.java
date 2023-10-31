@@ -44,8 +44,8 @@ public class ForFont {
                 .proportionAnd((int) hwpFontTypeInfo.getRatio())
                 .contrastAnd((int) hwpFontTypeInfo.getContrast())
                 .strokeVariationAnd((int) hwpFontTypeInfo.getStrokeDeviation())
-                .armStyleAnd(ValueConvertor.toBoolean(hwpFontTypeInfo.getStrokeDeviation()))
-                .letterformAnd(ValueConvertor.toBoolean(hwpFontTypeInfo.getCharacterShape()))
+                .armStyleAnd(ValueConvertor.bool(hwpFontTypeInfo.getStrokeDeviation()))
+                .letterformAnd(ValueConvertor.bool(hwpFontTypeInfo.getCharacterShape()))
                 .midlineAnd((int) hwpFontTypeInfo.getMiddleLine())
                 .xHeight((int) hwpFontTypeInfo.getxHeight());
     }

@@ -20,8 +20,12 @@ import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.*;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.*;
 
 public class ValueConvertor {
-    public static Boolean toBoolean(short value) {
+    public static Boolean bool(short value) {
         return (value == 0) ? false : true;
+    }
+
+    public static Boolean bool(String value) {
+        return value.equals("0") ? false : true;
     }
 
     public static LineType2 lineType2(BorderType hwpType) {
@@ -97,6 +101,19 @@ public class ValueConvertor {
                 hwpColor.getR(),
                 hwpColor.getG(),
                 hwpColor.getB());
+    }
+
+
+    public static String color(String color) {
+        long longColor = Long.parseLong(color);
+        int red = (int) ((longColor >> 16) & 0xff);
+        int green = (int) ((longColor >>  8) & 0xff);
+        int blue = (int) (longColor & 0xff);
+
+        return String.format("#%02X%02X%02X",
+                blue,
+                green,
+                red);
     }
 
     public static String colorWithNone(Color4Byte hwpColor, int noneValue) {
@@ -521,6 +538,5 @@ public class ValueConvertor {
                 return ArcType.NORMAL;
         }
     }
-
 }
 

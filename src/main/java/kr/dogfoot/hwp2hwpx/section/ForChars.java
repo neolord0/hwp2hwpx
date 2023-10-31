@@ -4,6 +4,7 @@ import kr.dogfoot.hwp2hwpx.Converter;
 import kr.dogfoot.hwp2hwpx.Parameter;
 import kr.dogfoot.hwp2hwpx.section.object.*;
 import kr.dogfoot.hwp2hwpx.section.object.gso.ForGso;
+import kr.dogfoot.hwp2hwpx.section.object.gso.form.ForForm;
 import kr.dogfoot.hwplib.object.bodytext.control.*;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.GsoControl;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
@@ -34,6 +35,7 @@ public class ForChars extends Converter {
     private ForFooter footerConverter;
     private ForFootnote footnoteConverter;
     private ForEndnote endnoteConverter;
+    private ForForm formConverter;
 
     public ForChars(Parameter parameter) {
         super(parameter);
@@ -49,6 +51,7 @@ public class ForChars extends Converter {
         footerConverter = new ForFooter(parameter);
         footnoteConverter = new ForFootnote(parameter);
         endnoteConverter = new ForEndnote(parameter);
+        formConverter = new ForForm(parameter);
     }
 
     public void convert(Para para, Paragraph hwpPara) {
@@ -247,6 +250,7 @@ public class ForChars extends Converter {
                     parameter.subListConverter().convertForHiddenComment(currentRun.addNewCtrl().addNewHiddenComment(), (ControlHiddenComment) hwpControl);
                     break;
                 case Form:
+                    formConverter.convert(currentRun, (ControlForm) hwpControl);
                     break;
             }
         }
