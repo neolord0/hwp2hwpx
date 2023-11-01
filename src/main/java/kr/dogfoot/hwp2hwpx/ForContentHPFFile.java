@@ -3,7 +3,9 @@ package kr.dogfoot.hwp2hwpx;
 import kr.dogfoot.hwp2hwpx.util.HWPUtil;
 import kr.dogfoot.hwplib.object.bindata.EmbeddedBinaryData;
 import kr.dogfoot.hwplib.object.bodytext.Section;
+import kr.dogfoot.hwplib.object.bodytext.control.Control;
 import kr.dogfoot.hwplib.object.bodytext.control.ControlSectionDefine;
+import kr.dogfoot.hwplib.object.bodytext.control.ControlType;
 import kr.dogfoot.hwplib.object.bodytext.control.sectiondefine.BatangPageInfo;
 import kr.dogfoot.hwplib.object.docinfo.BinData;
 import kr.dogfoot.hwplib.object.docinfo.bindata.BinDataType;
@@ -11,8 +13,11 @@ import kr.dogfoot.hwplib.org.apache.poi.hpsf.SummaryInformation;
 import kr.dogfoot.hwpxlib.object.content.context_hpf.ContentHPFFile;
 import kr.dogfoot.hwpxlib.object.content.context_hpf.ManifestItem;
 import kr.dogfoot.hwpxlib.object.content.context_hpf.MetaData;
+import kr.dogfoot.hwpxlib.object.content.masterpage_xml.MasterPageXMLFile;
+import kr.dogfoot.hwpxlib.object.content.masterpage_xml.enumtype.MasterPageType;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ForContentHPFFile extends Converter {
     private ContentHPFFile contentHPFFile;
@@ -78,13 +83,21 @@ public class ForContentHPFFile extends Converter {
         int sectionIndex = 0;
 
         for (Section hwpSection : hwpSectionList) {
+            ArrayList<MasterPageType> appliedMasterPageTypes = appliedMasterPageTypes(hwpSection);
+
             ControlSectionDefine hwpSectionDefine = HWPUtil.sectionDefine(hwpSection);
-            for (BatangPageInfo hwpBatangPageInfo : hwpSectionDefine.getBatangPageInfoList()) {
+            int count = hwpSectionDefine.getBatangPageInfoList().size();
+            for (int index = 0; index < count; index++) {
+                BatangPageInfo hwpBatangPageInfo = hwpSectionDefine.getBatangPageInfoList().get(index);
+
                 String masterPageId = "masterpage" + masterPageIndex;
+
                 addNewManifestItem(masterPageId,
                         "Contents/masterpage" + masterPageIndex + ".xml",
                         "application/xml");
-                parameter.masterPageIdMap().put(hwpBatangPageInfo, masterPageId);
+
+                parameter.masterPageIdMap().put(hwpBatangPageInfo,
+                        new Parameter.MasterPageInfo(masterPageId, appliedMasterPageTypes.get(index)));
 
                 masterPageIndex++;
             }
@@ -113,6 +126,34 @@ public class ForContentHPFFile extends Converter {
                 .hrefAnd(href)
                 .mediaType(mediaType);
     }
+
+
+    private ArrayList<MasterPageType> appliedMasterPageTypes(Section hwpSection) {
+        ArrayList<MasterPageType> masterPageTypes = new ArrayList<MasterPageType>();
+        ControlSectionDefine sectionDefine = sectionDefine(hwpSection);
+        if (sectionDefine != null) {
+            if (sectionDefine.getHeader().getProperty().isApplyBothBatangPage()) {
+                masterPageTypes.add(MasterPageType.BOTH);
+            }
+            if (sectionDefine.getHeader().getProperty().isApplyEvenBatangPage()) {
+                masterPageTypes.add(MasterPageType.EVEN);
+            }
+            if (sectionDefine.getHeader().getProperty().isApplyOddBatangPage()) {
+                masterPageTypes.add(MasterPageType.ODD);
+            }
+        }
+        return masterPageTypes;
+    }
+
+    private ControlSectionDefine sectionDefine(Section hwpSection) {
+        for (Control hwpControl : hwpSection.getParagraph(0).getControlList()) {
+            if (hwpControl.getType() == ControlType.SectionDefine) {
+                return (ControlSectionDefine) hwpControl;
+            }
+        }
+        return null;
+    }
+
 
     private void binData(int binDataId, BinData binData) {
         String id = makeBinDataID(binDataId, binData);

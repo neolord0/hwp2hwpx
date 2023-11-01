@@ -14,6 +14,7 @@ import kr.dogfoot.hwpxlib.object.common.ObjectList;
 import kr.dogfoot.hwpxlib.object.content.context_hpf.ContentHPFFile;
 import kr.dogfoot.hwpxlib.object.content.header_xml.HeaderXMLFile;
 import kr.dogfoot.hwpxlib.object.content.masterpage_xml.MasterPageXMLFile;
+import kr.dogfoot.hwpxlib.object.content.masterpage_xml.enumtype.MasterPageType;
 import kr.dogfoot.hwpxlib.object.content.section_xml.SectionXMLFile;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.ctrl.FieldBegin;
 import kr.dogfoot.hwpxlib.object.metainf.ContainerXMLFile;
@@ -28,7 +29,7 @@ import java.util.Stack;
 public class Parameter {
     private HWPInfo hwpInfo;
     private HWPXInfo hwpxInfo;
-    private Map<BatangPageInfo, String> masterPageIdMap;
+    private Map<BatangPageInfo, MasterPageInfo> masterPageIdMap;
     private Map<Integer, String> binDataIdMap;
     private Stack<FieldBegin> fieldBeginStack;
 
@@ -38,7 +39,7 @@ public class Parameter {
         hwpInfo = new HWPInfo(hwpFile);
         hwpxInfo = new HWPXInfo(hwpxFile);
 
-        masterPageIdMap = new HashMap<BatangPageInfo, String>();
+        masterPageIdMap = new HashMap<BatangPageInfo, MasterPageInfo>();
         binDataIdMap = new HashMap<Integer, String>();
         fieldBeginStack = new Stack<FieldBegin>();
 
@@ -53,7 +54,7 @@ public class Parameter {
         return hwpxInfo;
     }
 
-    public Map<BatangPageInfo, String> masterPageIdMap() {
+    public Map<BatangPageInfo, MasterPageInfo> masterPageIdMap() {
         return masterPageIdMap;
     }
 
@@ -151,5 +152,22 @@ public class Parameter {
         }
     }
 
+    public static class MasterPageInfo {
+        private String id;
+        private MasterPageType type;
+
+        public MasterPageInfo(String id, MasterPageType type) {
+            this.id = id;
+            this.type = type;
+        }
+
+        public String id() {
+            return id;
+        }
+
+        public MasterPageType type() {
+            return type;
+        }
+    }
 }
 

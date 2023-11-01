@@ -6,9 +6,11 @@ import kr.dogfoot.hwp2hwpx.util.ValueConvertor;
 import kr.dogfoot.hwplib.object.bodytext.control.*;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.textbox.LineChange;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.textbox.TextBox;
+import kr.dogfoot.hwplib.object.bodytext.control.sectiondefine.BatangPageInfo;
 import kr.dogfoot.hwplib.object.bodytext.control.table.Cell;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.ParagraphList;
+import kr.dogfoot.hwpxlib.object.content.masterpage_xml.MasterPageXMLFile;
 import kr.dogfoot.hwpxlib.object.content.section_xml.SubList;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.LineWrapMethod;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.TextDirection;
@@ -197,5 +199,22 @@ public class ForSubList extends Converter {
         // todo : linkListIDRef, linkListNextIDRef,  hasTextRef, hasNumRef ??
 
         paraList(drawText.subList(), hwpTextBox.getParagraphList());
+    }
+
+    public void convertForMasterPage(MasterPageXMLFile masterPageXMLFile, BatangPageInfo hwpBatangPageInfo) {
+        masterPageXMLFile.createSubList();
+        masterPageXMLFile.subList()
+                .idAnd("")
+                .textDirectionAnd(textDirection(hwpBatangPageInfo.getListHeader().getProperty().getTextDirection()))
+                .lineWrapAnd(lineWrapMethod(hwpBatangPageInfo.getListHeader().getProperty().getLineChange()))
+                .vertAlignAnd(ValueConvertor.verticalAlign2(hwpBatangPageInfo.getListHeader().getProperty().getTextVerticalAlignment()))
+                .linkListIDRefAnd(String.valueOf(0))
+                .linkListNextIDRefAnd(String.valueOf(0))
+                .textWidthAnd((int) hwpBatangPageInfo.getListHeader().getTextWidth())
+                .textHeightAnd((int) hwpBatangPageInfo.getListHeader().getTextHeight())
+                .hasTextRefAnd(false)
+                .hasNumRef(false);
+
+        paraList(masterPageXMLFile.subList(), hwpBatangPageInfo.getParagraphList());
     }
 }

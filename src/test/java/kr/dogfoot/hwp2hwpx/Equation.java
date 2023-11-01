@@ -15,19 +15,19 @@ public class Equation {
     public void test() throws Exception {
         String testPath = "test/equation";
 
-        HWPFile fromFile = HWPReader.fromFile(testPath + "/from.hwp");
+        HWPFile fromFile = HWPReader.fromFile(testPath + FileName.InputFile);
         HWPXFile toFile = Hwp2Hwpx.toHWPX(fromFile);
-        HWPXWriter.toFilepath(toFile, testPath + "/to.zip");
+        HWPXWriter.toFilepath(toFile, testPath + FileName.OutputFile);
 
         {
             String resultXML = Util.loadXMLString(testPath + "/result/header.xml", StandardCharsets.UTF_8);
-            String toXML = Util.zipFileString(testPath + "/to.zip", "Contents/header.xml", StandardCharsets.UTF_8);
+            String toXML = Util.zipFileString(testPath + FileName.OutputFile, "Contents/header.xml", StandardCharsets.UTF_8);
             Assert.assertEquals(resultXML, toXML);
         }
 
         {
             String resultXML = Util.loadXMLString(testPath + "/result/section0.xml", StandardCharsets.UTF_8);
-            String toXML = Util.zipFileString(testPath + "/to.zip", "Contents/section0.xml", StandardCharsets.UTF_8);
+            String toXML = Util.zipFileString(testPath + FileName.OutputFile, "Contents/section0.xml", StandardCharsets.UTF_8);
             Assert.assertEquals(resultXML, toXML);
         }
 

@@ -29,7 +29,6 @@ public class NameValuesGetter {
                     addProperty((PropertyNormal) property, nameValues);
                     break;
                 case NULL:
-                    System.out.println("null");
                     break;
             }
         }

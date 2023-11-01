@@ -7,12 +7,14 @@ import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.Run;
 
 public class ForForm extends Converter {
     private ForButton buttonConverter;
+    private ForComboBox comboBoxConverter;
     private ForEdit editConverter;
 
     public ForForm(Parameter parameter) {
         super(parameter);
 
         buttonConverter = new ForButton(parameter);
+        comboBoxConverter = new ForComboBox(parameter);
         editConverter = new ForEdit(parameter);
     }
 
@@ -25,6 +27,7 @@ public class ForForm extends Converter {
                 buttonConverter.convertForCheckBtn(currentRun.addNewCheckButton(), hwpForm);
                 break;
             case ComboBox:
+                comboBoxConverter.convert(currentRun.addNewComboBox(), hwpForm);
                 break;
             case RadioButton:
                 buttonConverter.covertForRadioBtn(currentRun.addNewRadioButton(), hwpForm);

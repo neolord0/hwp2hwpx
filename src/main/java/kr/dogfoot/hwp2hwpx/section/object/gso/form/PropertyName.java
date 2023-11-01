@@ -30,4 +30,7 @@ public class PropertyName {
     public static final String ReadOnly = "ReadOnly";
     public static final String AlignText = "AlignText";
     public static final String Text = "Text";
+    public static final String ListBoxRows = "ListBoxRows";
+    public static final String ListBoxWidth = "ListBoxWidth";
+    public static final String EditEnable = "EditEnable";
 }

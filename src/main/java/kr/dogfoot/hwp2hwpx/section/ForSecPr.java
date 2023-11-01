@@ -226,7 +226,7 @@ public class ForSecPr extends Converter {
     private void masterPages() {
         for (BatangPageInfo batangPageInfo : hwpSectionDefine.getBatangPageInfoList()) {
             secPr.addNewMasterPage()
-                    .idRef(parameter.masterPageIdMap().get(batangPageInfo));
+                    .idRef(parameter.masterPageIdMap().get(batangPageInfo).id());
         }
     }
 }
