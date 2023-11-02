@@ -16,9 +16,9 @@
 
 * 사용법
 ```java
-        HWPFile fromFile = HWPReader.fromFile(testPath + FileName.InputFile);
+        HWPFile fromFile = HWPReader.fromFile(InputFilePath);
         HWPXFile toFile = Hwp2Hwpx.toHWPX(fromFile);
-        HWPXWriter.toFilepath(toFile, testPath + FileName.OutputFile);
+        HWPXWriter.toFilepath(toFile, OutputFilePath);
 ```
 
 * hwp 파일에 대한 라이브러리는 https://github.com/neolord0/hwplib 을 참조해 주세요.
