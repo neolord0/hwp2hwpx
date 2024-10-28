@@ -17,6 +17,5 @@ public class ForInlineControl extends Converter {
         fieldEnd
                 .beginIDRefAnd(fieldBegin.id())
                 .fieldid(fieldBegin.fieldid());
-
     }
 }

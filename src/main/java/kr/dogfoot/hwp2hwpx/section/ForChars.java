@@ -9,6 +9,8 @@ import kr.dogfoot.hwplib.object.bodytext.control.*;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.GsoControl;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.text.*;
+import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.LineType2;
+import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.TabItemType;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.Para;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.Run;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.T;
@@ -175,13 +177,25 @@ public class ForChars extends Converter {
     }
 
     private void inlineControl(HWPCharControlInline hwpChar) {
-        endT();
         if (hwpChar.getCode() == 4) {
+            endT();
             inlineControlConverter.fieldEnd(currentRun.addNewCtrl().addNewFieldEnd(), hwpChar);
-        } else {
-
+        } else if (hwpChar.getCode() == 9) {
+            addTab();
         }
-        // System.out.println("IC: " + para.getRunIndex(currentRun) + " " + hwpChar.getCode());
+    }
+
+    private void addTab() {
+        startT();
+        if (textBuffer.length() > 0) {
+            currentT.addText(textBuffer.toString());
+            textBuffer.setLength(0);
+        }
+
+        currentT.addNewTab()
+                .widthAnd(4000)
+                .leaderAnd(LineType2.NONE)
+                .type(TabItemType.LEFT);
     }
 
     private void extendControl(HWPCharControlExtend hwpChar, int extendControlIndex) {
