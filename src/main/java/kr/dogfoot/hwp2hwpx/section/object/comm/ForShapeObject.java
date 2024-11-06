@@ -11,6 +11,8 @@ import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.VertRelTo;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.*;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.shapeobject.ShapeObject;
 
+import java.util.HashMap;
+
 public class ForShapeObject extends Converter {
     protected ShapeObject shapeObject;
     protected CtrlHeaderGso hwpGSOHeader;
@@ -139,7 +141,7 @@ public class ForShapeObject extends Converter {
                     .affectLSpacingAnd(hwpGSOHeader.getProperty().isApplyLineSpace())
                     .flowWithTextAnd(hwpGSOHeader.getProperty().isVertRelToParaLimit())
                     .allowOverlapAnd(hwpGSOHeader.getProperty().isAllowOverlap())
-                    .holdAnchorAndSOAnd(false)
+                    .holdAnchorAndSOAnd(hwpGSOHeader.isPreventPageDivide())
                     .vertRelToAnd(vertRelTo(hwpGSOHeader.getProperty().getVertRelTo()))
                     .horzRelToAnd(horzRelTo(hwpGSOHeader.getProperty().getHorzRelTo()))
                     .vertAlignAnd(vertAlign(hwpGSOHeader.getProperty().getVertRelativeArrange()))

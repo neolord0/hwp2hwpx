@@ -1,11 +1,14 @@
 package kr.dogfoot.hwp2hwpx.util;
 
+import kr.dogfoot.hwp2hwpx.Parameter;
 import kr.dogfoot.hwplib.object.HWPFile;
+import kr.dogfoot.hwplib.object.bindata.EmbeddedBinaryData;
 import kr.dogfoot.hwplib.object.bodytext.Section;
 import kr.dogfoot.hwplib.object.bodytext.control.Control;
 import kr.dogfoot.hwplib.object.bodytext.control.ControlSectionDefine;
 import kr.dogfoot.hwplib.object.bodytext.control.ControlType;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
+import kr.dogfoot.hwplib.object.docinfo.BinData;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.FillInfo;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.fillinfo.FillType;
 
@@ -63,5 +66,15 @@ public class HWPUtil {
                 return "image/wmf";
         }
         return "image/unknown";
+    }
+
+    public static EmbeddedBinaryData embeddedBinaryData(BinData binData, Parameter.HWPInfo hwp) {
+        for (EmbeddedBinaryData ebd : hwp.binData().getEmbeddedBinaryDataList()) {
+            String[] name_ext = ebd.getName().split("\\.");
+            if(Integer.parseInt(name_ext[0].substring(3)) == binData.getBinDataID()) {
+                return ebd;
+            }
+        }
+        return null;
     }
 }

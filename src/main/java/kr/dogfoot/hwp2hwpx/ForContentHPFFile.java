@@ -156,7 +156,7 @@ public class ForContentHPFFile extends Converter {
 
 
     private void binData(int binDataId, BinData binData) {
-        String id = makeBinDataID(binDataId, binData);
+        String id = makeBinDataID(binData);
         if (binData.getProperty().getType() == BinDataType.Link) {
             addNewManifestItemForLink(id,
                     binData.getAbsolutePathForLink(),
@@ -165,17 +165,17 @@ public class ForContentHPFFile extends Converter {
             addNewManifestItemForEmbedding(id,
                     hrefForEmbedding(id, binData.getExtensionForEmbedding()),
                     HWPUtil.mediaType(binData.getExtensionForEmbedding()),
-                    parameter.hwp().binData().getEmbeddedBinaryDataList().get(binDataId - 1));
+                    HWPUtil.embeddedBinaryData(binData, parameter.hwp()));
          }
 
         parameter.binDataIdMap().put(binDataId, id);
     }
 
-    private String makeBinDataID(int binDataId, BinData binData) {
+    private String makeBinDataID(BinData binData) {
         if (binData.getExtensionForEmbedding().equalsIgnoreCase("OLE")) {
-            return "ole" + binDataId;
+            return "ole" + binData.getBinDataID();
         } else {
-            return "image" + binDataId;
+            return "image" + binData.getBinDataID();
         }
     }
 
