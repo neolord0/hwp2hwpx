@@ -24,7 +24,7 @@ target/
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
-/dist/
+/dist/-
 /nbdist/
 /.nb-gradle/
 build/
@@ -36,3 +36,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/.idea/
