@@ -107,8 +107,8 @@ public class ForPicture extends ForShapeComponent {
     private void imgDim() {
         picture.createImgDim();
         picture.imgDim()
-                .dimwidthAnd((int) hwpSCP.getImageWidth())
-                .dimheight((int) hwpSCP.getImageHeight());
+                .dimwidthAnd(hwpSCP.getImageWidth())
+                .dimheight(hwpSCP.getImageHeight());
     }
 
     private void img() {

@@ -40,7 +40,7 @@ public class ForCharProperties extends Converter {
         charPr
                 .heightAnd(hwpCharShape.getBaseSize())
                 .textColorAnd(ValueConvertor.color(hwpCharShape.getCharColor()))
-                .shadeColorAnd(ValueConvertor.colorWithNone(hwpCharShape.getShadeColor(), -1))
+                .shadeColorAnd(ValueConvertor.colorWithNone(hwpCharShape.getShadeColor(), 0xFFFFFFFFl))
                 .useFontSpaceAnd(hwpCharShape.getProperty().isUsingSpaceAppropriateForFont())
                 .useKerningAnd(hwpCharShape.getProperty().isKerning())
                 .symMarkAnd(sysMark(hwpCharShape.getProperty().getEmphasisSort()))

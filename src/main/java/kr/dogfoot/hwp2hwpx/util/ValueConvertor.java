@@ -116,7 +116,7 @@ public class ValueConvertor {
                 red);
     }
 
-    public static String colorWithNone(Color4Byte hwpColor, int noneValue) {
+    public static String colorWithNone(Color4Byte hwpColor, long noneValue) {
         if (noneValue == hwpColor.getValue()) {
             return "none";
         } else {
