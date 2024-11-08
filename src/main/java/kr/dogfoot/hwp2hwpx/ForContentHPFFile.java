@@ -84,7 +84,6 @@ public class ForContentHPFFile extends Converter {
 
         for (Section hwpSection : hwpSectionList) {
             ArrayList<MasterPageType> appliedMasterPageTypes = appliedMasterPageTypes(hwpSection);
-
             ControlSectionDefine hwpSectionDefine = HWPUtil.sectionDefine(hwpSection);
             int count = hwpSectionDefine.getBatangPageInfoList().size();
             for (int index = 0; index < count; index++) {

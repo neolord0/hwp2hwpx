@@ -41,8 +41,8 @@ public class ForShapeComponent extends ForShapeObject {
     private void orgSz() {
         shapeComponent.createOrgSz();
         shapeComponent.orgSz()
-                .widthAnd(hwpGSO.getShapeComponent().getWidthAtCreate())
-                .height(hwpGSO.getShapeComponent().getHeightAtCreate());
+                .widthAnd((long) hwpGSO.getShapeComponent().getWidthAtCreate())
+                .height((long) hwpGSO.getShapeComponent().getHeightAtCreate());
     }
 
     private void curSz() {
@@ -50,13 +50,13 @@ public class ForShapeComponent extends ForShapeObject {
         if (hwpGSO.getShapeComponent().getWidthAtCreate() == hwpGSO.getShapeComponent().getWidthAtCurrent()) {
             shapeComponent.curSz().width(0L);
         } else {
-            shapeComponent.curSz().width(hwpGSO.getShapeComponent().getWidthAtCurrent());
+            shapeComponent.curSz().width((long) hwpGSO.getShapeComponent().getWidthAtCurrent());
         }
 
         if (hwpGSO.getShapeComponent().getHeightAtCreate() == hwpGSO.getShapeComponent().getHeightAtCurrent()) {
             shapeComponent.curSz().height(0L);
         } else {
-            shapeComponent.curSz().height(hwpGSO.getShapeComponent().getHeightAtCurrent());
+            shapeComponent.curSz().height((long) hwpGSO.getShapeComponent().getHeightAtCurrent());
         }
     }
 
