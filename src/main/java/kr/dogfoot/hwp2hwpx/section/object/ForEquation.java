@@ -29,9 +29,8 @@ public class ForEquation extends ForShapeObject {
     }
 
     private EquationLineMode equationLineMode(long property) {
-        if ((property & 0x1) == 0x1) {
-            return EquationLineMode.LINE;
-        }
-        return  EquationLineMode.CHAR;
+        if ((property & 0x1) == 0x1) return EquationLineMode.LINE;
+
+        return EquationLineMode.CHAR;
     }
  }

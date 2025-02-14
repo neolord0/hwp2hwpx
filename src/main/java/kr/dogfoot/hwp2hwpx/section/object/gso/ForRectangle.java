@@ -47,7 +47,6 @@ public class ForRectangle extends ForShapeComponent {
         pt3();
     }
 
-
     private void pt0() {
         rectangle.createPt0();
         rectangle.pt0()

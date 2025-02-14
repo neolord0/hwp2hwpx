@@ -67,11 +67,11 @@ public class ForTable extends ForShapeObject {
     }
 
     private void cellzoneList() {
-        if (hwpTable.getTable().getZoneInfoList().size() > 0) {
-            table.createCellzoneList();
-            for (ZoneInfo zoneInfo : hwpTable.getTable().getZoneInfoList()) {
-                cellzone(table.cellzoneList().addNew(), zoneInfo);
-            }
+        if (hwpTable.getTable().getZoneInfoList().size() == 0) return;
+
+        table.createCellzoneList();
+        for (ZoneInfo zoneInfo : hwpTable.getTable().getZoneInfoList()) {
+            cellzone(table.cellzoneList().addNew(), zoneInfo);
         }
     }
 

@@ -19,9 +19,7 @@ public class ForStyles extends Converter {
     }
 
     public void convert(RefList refList, ArrayList<kr.dogfoot.hwplib.object.docinfo.Style> hwpStyleList) {
-        if (hwpStyleList.size() == 0) {
-            return;
-        }
+        if (hwpStyleList.size() == 0) return;
 
         refList.createStyles();
 

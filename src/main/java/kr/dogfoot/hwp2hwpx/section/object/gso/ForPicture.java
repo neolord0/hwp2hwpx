@@ -41,7 +41,6 @@ public class ForPicture extends ForShapeComponent {
         effects();
     }
 
-
     private void lineShape() {
         if (hwpSCP.getBorderProperty().getLineType() != LineType.None) {
             picture.createLineShape();

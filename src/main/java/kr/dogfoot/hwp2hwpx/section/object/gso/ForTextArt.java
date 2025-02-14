@@ -250,7 +250,6 @@ public class ForTextArt extends ForShapeComponent {
         }
     }
 
-
     private TextArtAlign textArtAlign(kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponenteach.textart.TextArtAlign hwpAlign) {
         switch (hwpAlign) {
             case LEFT:
@@ -269,13 +268,13 @@ public class ForTextArt extends ForShapeComponent {
     }
 
     private void outline() {
-        if (hwpSCTA.getOutlinePointList().size() > 0) {
-            textArt.createOutline();
-            for (PositionXY hwpPositionXY : hwpSCTA.getOutlinePointList()) {
-                textArt.outline().addNew()
-                        .xAnd(hwpPositionXY.getX())
-                        .y(hwpPositionXY.getY());
-            }
+        if (hwpSCTA.getOutlinePointList().size() == 0) return;
+
+        textArt.createOutline();
+        for (PositionXY hwpPositionXY : hwpSCTA.getOutlinePointList()) {
+            textArt.outline().addNew()
+                    .xAnd(hwpPositionXY.getX())
+                    .y(hwpPositionXY.getY());
         }
     }
 }

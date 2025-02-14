@@ -28,9 +28,7 @@ public class ForParaProperties extends Converter {
     }
 
     public void convert(RefList refList, ArrayList<ParaShape> hwpParaShapeList) {
-        if (hwpParaShapeList.size() == 0) {
-            return;
-        }
+        if (hwpParaShapeList.size() == 0) return;
 
         refList.createParaProperties();
 
@@ -104,8 +102,6 @@ public class ForParaProperties extends Converter {
                 .pageBreakBeforeAnd(hwpParaShape.getProperty1().isSplitPageBeforePara())
                 .lineWrap(lineWrap(hwpParaShape.getProperty2().isInputSingleLine()));
     }
-
-
 
     private LineBreakForLatin breakLatinWord(LineDivideForEnglish hwpLineDivideForEnglish) {
         switch (hwpLineDivideForEnglish) {

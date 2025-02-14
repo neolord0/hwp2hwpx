@@ -57,9 +57,7 @@ public class ForChars extends Converter {
     }
 
     public void convert(Para para, Paragraph hwpPara) {
-        if (hwpPara.getText() == null) {
-            return;
-        }
+        if (hwpPara.getText() == null) return;
 
         this.para = para;
         this.hwpPara = hwpPara;
@@ -201,6 +199,8 @@ public class ForChars extends Converter {
     private void extendControl(HWPCharControlExtend hwpChar, int extendControlIndex) {
         endT();
 
+        if (hwpPara == null || hwpPara.getControlList() == null) return;
+
         Control hwpControl = hwpPara.getControlList().get(extendControlIndex);
         if (hwpControl.isField()) {
             fieldBeginConverter.convent(currentRun.addNewCtrl().addNewFieldBegin(), (ControlField) hwpControl);
@@ -271,16 +271,16 @@ public class ForChars extends Converter {
     }
 
     private void startT() {
-        if (currentT == null) {
-            currentT = currentRun.addNewT();
-            textBuffer.setLength(0);
-        }
+        if (currentT != null) return;
+
+        currentT = currentRun.addNewT();
+        textBuffer.setLength(0);
     }
 
     private void endT() {
-        if (currentT != null) {
-            currentT.addText(textBuffer.toString());
-            currentT = null;
-        }
+        if (currentT == null) return;
+
+        currentT.addText(textBuffer.toString());
+        currentT = null;
     }
 }

@@ -20,9 +20,7 @@ public class ForCharProperties extends Converter {
     }
 
     public void convert(RefList refList, ArrayList<CharShape> hwpCharShapeList) {
-        if (hwpCharShapeList.size() == 0) {
-            return;
-        }
+        if (hwpCharShapeList.size() == 0) return;
 
         refList.createCharProperties();
 

@@ -28,9 +28,7 @@ public class ForBorderFills extends Converter {
 
     public void convert(RefList refList,
                         ArrayList<kr.dogfoot.hwplib.object.docinfo.BorderFill> hwpBorderFillList) {
-        if (hwpBorderFillList.size() == 0) {
-            return;
-        }
+        if (hwpBorderFillList.size() == 0) return;
 
         refList.createBorderFills();
 

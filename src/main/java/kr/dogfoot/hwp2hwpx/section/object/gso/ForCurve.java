@@ -11,7 +11,9 @@ import kr.dogfoot.hwplib.object.bodytext.control.gso.shapecomponenteach.polygon.
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.CurveSegmentType;
 import kr.dogfoot.hwpxlib.object.content.section_xml.paragraph.object.Curve;
 
-public class ForCurve extends ForShapeComponent {
+public class
+
+ForCurve extends ForShapeComponent {
     private Curve curve;
     private ControlCurve hwpCurve;
 

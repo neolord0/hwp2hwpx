@@ -29,13 +29,10 @@ public class ForFieldBegin extends Converter {
     }
 
     private String name(ControlField hwpField) {
-        if (hwpField.getHeader().getCommand() != null) {
-            return "";
-        } else if (hwpField.getName() != null) {
-            return hwpField.getName();
-        } else {
-            return "";
-        }
+        if (hwpField.getHeader().getCommand() != null) return "";
+        else if (hwpField.getName() != null) return hwpField.getName();
+
+        return "";
     }
 
     private FieldType fieldType(ControlType type) {

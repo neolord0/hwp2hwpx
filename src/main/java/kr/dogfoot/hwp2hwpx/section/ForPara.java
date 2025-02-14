@@ -39,22 +39,21 @@ public class ForPara extends Converter {
     }
 
     private void lineSegArray(Para para, Paragraph hwpPara) {
-        if (hwpPara.getLineSeg() != null && hwpPara.getLineSeg().getLineSegItemList().size() > 0) {
-            para.createLineSegArray();
+        if (hwpPara.getLineSeg() == null || hwpPara.getLineSeg().getLineSegItemList().size() == 0) return;
 
-            for (LineSegItem hwpLineSegItem : hwpPara.getLineSeg().getLineSegItemList()) {
-                para.lineSegArray().addNew()
-                        .textposAnd((int) hwpLineSegItem.getTextStartPosition())
-                        .vertposAnd(hwpLineSegItem.getLineVerticalPosition())
-                        .vertsizeAnd(hwpLineSegItem.getLineHeight())
-                        .textheightAnd(hwpLineSegItem.getTextPartHeight())
-                        .baselineAnd(hwpLineSegItem.getDistanceBaseLineToLineVerticalPosition())
-                        .spacingAnd(hwpLineSegItem.getLineSpace())
-                        .horzposAnd(hwpLineSegItem.getStartPositionFromColumn())
-                        .horzsizeAnd(hwpLineSegItem.getSegmentWidth())
-                        .flags((int) hwpLineSegItem.getTag().getValue());
-            }
+        para.createLineSegArray();
+
+        for (LineSegItem hwpLineSegItem : hwpPara.getLineSeg().getLineSegItemList()) {
+            para.lineSegArray().addNew()
+                    .textposAnd((int) hwpLineSegItem.getTextStartPosition())
+                    .vertposAnd(hwpLineSegItem.getLineVerticalPosition())
+                    .vertsizeAnd(hwpLineSegItem.getLineHeight())
+                    .textheightAnd(hwpLineSegItem.getTextPartHeight())
+                    .baselineAnd(hwpLineSegItem.getDistanceBaseLineToLineVerticalPosition())
+                    .spacingAnd(hwpLineSegItem.getLineSpace())
+                    .horzposAnd(hwpLineSegItem.getStartPositionFromColumn())
+                    .horzsizeAnd(hwpLineSegItem.getSegmentWidth())
+                    .flags((int) hwpLineSegItem.getTag().getValue());
         }
     }
 }
-

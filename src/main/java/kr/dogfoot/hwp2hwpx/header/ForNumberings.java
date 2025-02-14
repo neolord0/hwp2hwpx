@@ -22,9 +22,8 @@ public class ForNumberings extends Converter {
     }
 
     public void convert(RefList refList, ArrayList<kr.dogfoot.hwplib.object.docinfo.Numbering> hwpNumberingList) {
-        if (hwpNumberingList.size() == 0) {
-            return;
-        }
+        if (hwpNumberingList.size() == 0) return;
+
         refList.createNumberings();
 
         int id = 1;

@@ -16,7 +16,6 @@ public class ForConnectLine extends ForShapeComponent {
     private ControlObjectLinkLine hwpObjectLinkLine;
     private ShapeComponentLineForObjectLinkLine hwpSCL;
 
-
     public ForConnectLine(Parameter parameter) {
         super(parameter);
     }
@@ -88,7 +87,6 @@ public class ForConnectLine extends ForShapeComponent {
                 .subjectIdx((short) hwpSCL.getEndSubjectIndex());
     }
 
-
     private void controlPoints() {
         connectLine.createControlPoints();
         for (ControlPoint hwpCP : hwpSCL.getControlPoints()) {
@@ -98,5 +96,4 @@ public class ForConnectLine extends ForShapeComponent {
                     .type(hwpCP.getType());
         }
     }
-
 }

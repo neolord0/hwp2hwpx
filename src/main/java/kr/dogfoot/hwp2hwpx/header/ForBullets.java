@@ -18,9 +18,7 @@ public class ForBullets extends Converter {
     }
 
     public void convert(RefList refList, ArrayList<kr.dogfoot.hwplib.object.docinfo.Bullet> bulletList) {
-        if (bulletList.size() == 0) {
-            return;
-        }
+        if (bulletList.size() == 0) return;
 
         refList.createBullets();
 

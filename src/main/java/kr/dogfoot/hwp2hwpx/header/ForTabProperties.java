@@ -25,9 +25,7 @@ public class ForTabProperties extends Converter {
     }
 
     public void convert(RefList refList, ArrayList<TabDef> hwpTabDefList) {
-        if (hwpTabDefList.size() == 0) {
-            return;
-        }
+        if (hwpTabDefList.size() == 0) return;
 
         refList.createTabProperties();
 

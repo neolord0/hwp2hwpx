@@ -59,14 +59,12 @@ public class ForColPr {
     }
 
     private static void colLine(ColPr colPr, CtrlHeaderColumnDefine header) {
-        if (header.getDivideLine().getType() != BorderType.None) {
-            colPr.createColLine();
-            colPr.colLine()
-                    .typeAnd(ValueConvertor.lineType2(header.getDivideLine().getType()))
-                    .widthAnd(ValueConvertor.lineWidth(header.getDivideLine().getThickness()))
-                    .color(ValueConvertor.color(header.getDivideLine().getColor()));
-        }
+        if (header.getDivideLine().getType() == BorderType.None) return;
+
+        colPr.createColLine();
+        colPr.colLine()
+                .typeAnd(ValueConvertor.lineType2(header.getDivideLine().getType()))
+                .widthAnd(ValueConvertor.lineWidth(header.getDivideLine().getThickness()))
+                .color(ValueConvertor.color(header.getDivideLine().getColor()));
     }
 }
-
-

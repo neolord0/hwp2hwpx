@@ -19,9 +19,7 @@ public class ForMemoProperties extends Converter {
     }
 
     public void convert(RefList refList, ArrayList<MemoShape> memoShapeList) {
-        if (memoShapeList.size() == 0) {
-            return;
-        }
+        if (memoShapeList.size() == 0) return;
 
         refList.createMemoProperties();
 
