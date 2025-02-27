@@ -153,7 +153,6 @@ public class ForContentHPFFile extends Converter {
         return null;
     }
 
-
     private void binData(int binDataId, BinData binData) {
         String id = makeBinDataID(binData);
         if (binData.getProperty().getType() == BinDataType.Link) {
@@ -161,10 +160,12 @@ public class ForContentHPFFile extends Converter {
                     binData.getAbsolutePathForLink(),
                     HWPUtil.mediaTypeFromFilepath(binData.getAbsolutePathForLink()));
         } else {
-            addNewManifestItemForEmbedding(id,
-                    hrefForEmbedding(id, binData.getExtensionForEmbedding()),
-                    HWPUtil.mediaType(binData.getExtensionForEmbedding()),
-                    HWPUtil.embeddedBinaryData(binData, parameter.hwp()));
+            if (hasEmbeddedBinaryData(binData)) {
+                addNewManifestItemForEmbedding(id,
+                        hrefForEmbedding(id, binData.getExtensionForEmbedding()),
+                        HWPUtil.mediaType(binData.getExtensionForEmbedding()),
+                        HWPUtil.embeddedBinaryData(binData, parameter.hwp()));
+            }
          }
 
         parameter.binDataIdMap().put(binDataId, id);
@@ -176,6 +177,20 @@ public class ForContentHPFFile extends Converter {
         } else {
             return "image" + binData.getBinDataID();
         }
+    }
+
+    private boolean hasEmbeddedBinaryData(BinData binData) {
+        for(EmbeddedBinaryData data : parameter.hwp().binData().getEmbeddedBinaryDataList()) {
+            if(data.getName().endsWith(String.valueOf(binData.getBinDataID()))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int nameToID(String name) {
+        String id = name.substring(3, 7);
+        return Integer.parseInt(id, 16);
     }
 
     private void addNewManifestItemForLink(String id, String href, String mediaType) {
