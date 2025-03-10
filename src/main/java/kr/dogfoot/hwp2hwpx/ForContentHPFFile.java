@@ -181,7 +181,8 @@ public class ForContentHPFFile extends Converter {
 
     private boolean hasEmbeddedBinaryData(BinData binData) {
         for(EmbeddedBinaryData data : parameter.hwp().binData().getEmbeddedBinaryDataList()) {
-            if(data.getName().endsWith(String.valueOf(binData.getBinDataID()))) {
+            String[] name_ext = data.getName().split("\\.");
+            if(name_ext[0].endsWith(String.format("%03X", binData.getBinDataID()))) {
                 return true;
             }
         }

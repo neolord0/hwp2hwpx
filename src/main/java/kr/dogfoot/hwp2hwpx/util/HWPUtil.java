@@ -71,7 +71,7 @@ public class HWPUtil {
     public static EmbeddedBinaryData embeddedBinaryData(BinData binData, Parameter.HWPInfo hwp) {
         for (EmbeddedBinaryData ebd : hwp.binData().getEmbeddedBinaryDataList()) {
             String[] name_ext = ebd.getName().split("\\.");
-            if(Integer.parseInt(name_ext[0].substring(3)) == binData.getBinDataID()) {
+            if(Integer.parseInt(name_ext[0].substring(3), 16) == binData.getBinDataID()) {
                 return ebd;
             }
         }
