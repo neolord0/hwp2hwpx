@@ -45,8 +45,8 @@ public class ForFillBrush {
     private static void winBrush(WinBrush winBrush, PatternFill hwpPatternFill) {
         if (hwpPatternFill.getPatternType() == PatternType.None) {
             winBrush
-                    .faceColorAnd("none")
-                    .hatchColorAnd("#FF000000")
+                    .faceColorAnd(ValueConvertor.color(hwpPatternFill.getBackColor()))
+                    .hatchColorAnd(ValueConvertor.color(hwpPatternFill.getPatternColor()))
                     .alpha((float) 0);
         } else {
             winBrush

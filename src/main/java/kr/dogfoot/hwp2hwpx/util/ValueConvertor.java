@@ -97,6 +97,8 @@ public class ValueConvertor {
     }
 
     public static String color(Color4Byte hwpColor) {
+        if (hwpColor.getValue() == 4294967295L) return "none";
+
         return String.format("#%02X%02X%02X",
                 hwpColor.getR(),
                 hwpColor.getG(),
