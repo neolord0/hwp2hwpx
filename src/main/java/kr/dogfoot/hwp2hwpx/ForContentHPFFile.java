@@ -42,10 +42,7 @@ public class ForContentHPFFile extends Converter {
 
     private void metadata() {
         SummaryInformation summaryInformation = parameter.hwp().summaryInformation();
-
-        if (summaryInformation == null) {
-            return;
-        }
+        if (summaryInformation == null) return;
 
         contentHPFFile.createMetaData();
 
