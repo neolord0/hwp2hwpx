@@ -46,6 +46,9 @@ public class ForDrawingObject {
 
 
     public static void shadow(DrawingShadow shadow, ShadowInfo hwpShadowInfo) {
+        if (hwpShadowInfo == null) {
+            return;
+        }
         shadow
                 .typeAnd(drawingShadowType(hwpShadowInfo.getType()))
                 .colorAnd(ValueConvertor.color(hwpShadowInfo.getColor()))
