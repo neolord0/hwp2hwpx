@@ -46,8 +46,10 @@ public class ForTextArt extends ForShapeComponent {
         textArt.createFillBrush();
         ForFillBrush.convertForDrawingObject(textArt.fillBrush(), hwpSCN.getFillInfo(), parameter);
 
-        textArt.createShadow();
-        ForDrawingObject.shadow(textArt.shadow(), hwpSCN.getShadowInfo());
+        if (hwpSCN.getShadowInfo() != null) {
+            textArt.createShadow();
+            ForDrawingObject.shadow(textArt.shadow(), hwpSCN.getShadowInfo());
+        }
 
         pt0();
         pt1();

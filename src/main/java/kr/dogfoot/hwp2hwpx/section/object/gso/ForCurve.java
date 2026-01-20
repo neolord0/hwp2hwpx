@@ -37,8 +37,10 @@ ForCurve extends ForShapeComponent {
         curve.createFillBrush();
         ForFillBrush.convertForDrawingObject(curve.fillBrush(), hwpSCN.getFillInfo(), parameter);
 
-        curve.createShadow();
-        ForDrawingObject.shadow(curve.shadow(), hwpSCN.getShadowInfo());
+        if (hwpSCN.getShadowInfo() != null) {
+            curve.createShadow();
+            ForDrawingObject.shadow(curve.shadow(), hwpSCN.getShadowInfo());
+        }
 
         if (hwpCurve.getTextBox() != null) {
             curve.createDrawText();

@@ -37,8 +37,10 @@ public class ForArc extends ForShapeComponent {
         arc.createFillBrush();
         ForFillBrush.convertForDrawingObject(arc.fillBrush(), hwpSCN.getFillInfo(), parameter);
 
-        arc.createShadow();
-        ForDrawingObject.shadow(arc.shadow(), hwpSCN.getShadowInfo());
+        if (hwpSCN.getShadowInfo() != null) {
+            arc.createShadow();
+            ForDrawingObject.shadow(arc.shadow(), hwpSCN.getShadowInfo());
+        }
 
         if (hwpArc.getTextBox() != null) {
             arc.createDrawText();

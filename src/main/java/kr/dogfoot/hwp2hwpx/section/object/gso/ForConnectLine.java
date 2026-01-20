@@ -35,8 +35,10 @@ public class ForConnectLine extends ForShapeComponent {
         connectLine.createLineShape();
         ForDrawingObject.lineShape(connectLine.lineShape(), hwpSCN.getLineInfo());
 
-        connectLine.createShadow();
-        ForDrawingObject.shadow(connectLine.shadow(), hwpSCN.getShadowInfo());
+        if (hwpSCN.getShadowInfo() != null) {
+            connectLine.createShadow();
+            ForDrawingObject.shadow(connectLine.shadow(), hwpSCN.getShadowInfo());
+        }
 
         startPt();
         endPt();

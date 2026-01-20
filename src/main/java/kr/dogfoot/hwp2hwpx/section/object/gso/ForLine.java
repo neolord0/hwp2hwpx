@@ -28,8 +28,10 @@ public class ForLine extends ForShapeComponent {
         line.createLineShape();
         ForDrawingObject.lineShape(line.lineShape(), hwpSCN.getLineInfo());
 
-        line.createShadow();
-        ForDrawingObject.shadow(line.shadow(), hwpSCN.getShadowInfo());
+        if (hwpSCN.getShadowInfo() != null) {
+            line.createShadow();
+            ForDrawingObject.shadow(line.shadow(), hwpSCN.getShadowInfo());
+        }
 
         startPt();
         endPt();

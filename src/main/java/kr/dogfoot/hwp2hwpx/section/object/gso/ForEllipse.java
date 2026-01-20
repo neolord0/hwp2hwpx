@@ -39,8 +39,10 @@ public class ForEllipse extends ForShapeComponent {
         ellipse.createFillBrush();
         ForFillBrush.convertForDrawingObject(ellipse.fillBrush(), hwpSCN.getFillInfo(), parameter);
 
-        ellipse.createShadow();
-        ForDrawingObject.shadow(ellipse.shadow(), hwpSCN.getShadowInfo());
+        if (hwpSCN.getShadowInfo() != null) {
+            ellipse.createShadow();
+            ForDrawingObject.shadow(ellipse.shadow(), hwpSCN.getShadowInfo());
+        }
 
         if (hwpEllipse.getTextBox() != null) {
             ellipse.createDrawText();
