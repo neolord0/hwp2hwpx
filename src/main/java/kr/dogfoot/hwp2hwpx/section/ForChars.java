@@ -199,7 +199,9 @@ public class ForChars extends Converter {
     private void extendControl(HWPCharControlExtend hwpChar, int extendControlIndex) {
         endT();
 
-        if (hwpPara == null || hwpPara.getControlList() == null) return;
+        if (hwpPara == null || hwpPara.getControlList() == null || extendControlIndex >= hwpPara.getControlList().size()) {
+            return;
+        }
 
         Control hwpControl = hwpPara.getControlList().get(extendControlIndex);
         if (hwpControl.isField()) {
