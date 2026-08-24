@@ -50,9 +50,9 @@ public class ForTable extends ForShapeObject {
             case NoDivide:
                 return TablePageBreak.NONE;
             case DivideByCell:
-                return TablePageBreak.CELL;
-            case Divide:
                 return TablePageBreak.TABLE;
+            case Divide:
+                return TablePageBreak.CELL;
         }
         return TablePageBreak.CELL;
     }
