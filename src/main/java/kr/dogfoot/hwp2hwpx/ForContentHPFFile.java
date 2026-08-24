@@ -173,7 +173,7 @@ public class ForContentHPFFile extends Converter {
     }
 
     private String makeBinDataID(BinData binData) {
-        if (binData.getExtensionForEmbedding().equalsIgnoreCase("OLE")) {
+        if ("OLE".equalsIgnoreCase(binData.getExtensionForEmbedding())) {
             return "ole" + binData.getBinDataID();
         } else {
             return "image" + binData.getBinDataID();
