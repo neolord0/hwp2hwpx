@@ -32,7 +32,6 @@ public class ForTextArt extends ForShapeComponent {
         this.textArt = textArt;
         this.hwpTextArt = hwpTextArt;
 
-
         this.hwpSCTA = hwpTextArt.getShapeComponentTextArt();
 
         ShapeComponentNormal hwpSCN = ((ShapeComponentNormal) hwpTextArt.getShapeComponent());

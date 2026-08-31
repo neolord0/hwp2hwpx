@@ -19,7 +19,7 @@ public class ForCell extends Converter {
         this.hwpCell = hwpCell;
 
         tc
-                .nameAnd(hwpCell.getListHeader().getFieldName())
+                .nameAnd(hwpCell.getListHeader().getFieldName() == null ? "" : hwpCell.getListHeader().getFieldName())
                 .headerAnd(hwpCell.getListHeader().getProperty().isTitleCell())
                 .hasMarginAnd(hwpCell.getListHeader().getProperty().isApplyInnerMagin())
                 .protectAnd(hwpCell.getListHeader().getProperty().isProtectCell())

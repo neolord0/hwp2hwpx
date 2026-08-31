@@ -22,18 +22,15 @@ import kr.dogfoot.hwpxlib.object.metainf.ManifestXMLFile;
 import kr.dogfoot.hwpxlib.object.root.SettingsXMLFile;
 import kr.dogfoot.hwpxlib.object.root.VersionXMLFile;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class Parameter {
-    private HWPInfo hwpInfo;
-    private HWPXInfo hwpxInfo;
-    private Map<BatangPageInfo, MasterPageInfo> masterPageIdMap;
-    private Map<Integer, String> binDataIdMap;
-    private Stack<FieldBegin> fieldBeginStack;
-
-    private ForSubList subListConverter;
+    private final HWPInfo hwpInfo;
+    private final HWPXInfo hwpxInfo;
+    private final Map<BatangPageInfo, MasterPageInfo> masterPageIdMap;
+    private final Map<Integer, String> binDataIdMap;
+    private final Stack<FieldBegin> fieldBeginStack;
+    private final Stack<ForSubList> subListConverterStack;
 
     public Parameter(HWPFile hwpFile, HWPXFile hwpxFile) {
         hwpInfo = new HWPInfo(hwpFile);
@@ -42,8 +39,7 @@ public class Parameter {
         masterPageIdMap = new HashMap<BatangPageInfo, MasterPageInfo>();
         binDataIdMap = new HashMap<Integer, String>();
         fieldBeginStack = new Stack<FieldBegin>();
-
-        subListConverter = new ForSubList(this);
+        subListConverterStack = new Stack<ForSubList>();
     }
 
     public HWPInfo hwp() {
@@ -67,7 +63,17 @@ public class Parameter {
     }
 
     public ForSubList subListConverter() {
-        return subListConverter;
+        if (subListConverterStack.isEmpty()) {
+            ForSubList newOne = new ForSubList(this);
+            subListConverterStack.push(newOne);
+            return newOne;
+        }
+
+        return subListConverterStack.pop();
+    }
+
+    public void releaseSubListConverter(ForSubList subListConverter) {
+        subListConverterStack.push(subListConverter);
     }
 
     public static class HWPInfo {
@@ -170,4 +176,3 @@ public class Parameter {
         }
     }
 }
-

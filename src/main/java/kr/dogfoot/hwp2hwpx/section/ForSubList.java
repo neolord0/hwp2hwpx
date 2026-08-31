@@ -43,6 +43,8 @@ public class ForSubList extends Converter {
         // todo : linkListIDRef, linkListNextIDRef, textHeight, hasTextRef, hasNumRef ??
 
         paraList(caption.subList(), hwpCaption.getParagraphList());
+
+        parameter.releaseSubListConverter(this);
     }
 
     private void paraList(SubList subList, ParagraphList paragraphList) {
@@ -84,13 +86,15 @@ public class ForSubList extends Converter {
                 .vertAlignAnd(ValueConvertor.verticalAlign2(hwpCell.getListHeader().getProperty().getTextVerticalAlignment()))
                 .linkListIDRefAnd(String.valueOf(0))
                 .linkListNextIDRefAnd(String.valueOf(0))
-                .textWidthAnd((int) hwpCell.getListHeader().getTextWidth())
+                .textWidthAnd(0)
                 .textHeightAnd(0)
                 .hasTextRefAnd(false)
                 .hasNumRef(false);
         // todo : linkListIDRef, linkListNextIDRef, textHeight, hasTextRef, hasNumRef ??
 
         paraList(tc.subList(), hwpCell.getParagraphList());
+
+        parameter.releaseSubListConverter(this);
     }
 
     public void convertForHeader(Header header, ControlHeader hwpHeader) {
@@ -109,6 +113,8 @@ public class ForSubList extends Converter {
         // todo : linkListIDRef, linkListNextIDRef, hasTextRef, hasNumRef ??
 
         paraList(header.subList(), hwpHeader.getParagraphList());
+
+        parameter.releaseSubListConverter(this);
     }
 
     public void convertForFooter(Footer footer, ControlFooter hwpFooter) {
@@ -127,6 +133,8 @@ public class ForSubList extends Converter {
         // todo : linkListIDRef, linkListNextIDRef, hasTextRef, hasNumRef ??
 
         paraList(footer.subList(), hwpFooter.getParagraphList());
+
+        parameter.releaseSubListConverter(this);
     }
 
     public void convertForFootnote(FootNote footnote, ControlFootnote hwpFootnote) {
@@ -145,6 +153,8 @@ public class ForSubList extends Converter {
         // todo : linkListIDRef, linkListNextIDRef, hasTextRef, hasNumRef ??
 
         paraList(footnote.subList(), hwpFootnote.getParagraphList());
+
+        parameter.releaseSubListConverter(this);
     }
 
     public void convertForEndnote(EndNote endnote, ControlEndnote hwpEndnote) {
@@ -163,6 +173,8 @@ public class ForSubList extends Converter {
         // todo : linkListIDRef, linkListNextIDRef, hasTextRef, hasNumRef ??
 
         paraList(endnote.subList(), hwpEndnote.getParagraphList());
+
+        parameter.releaseSubListConverter(this);
     }
 
     public void convertForHiddenComment(HiddenComment hiddenComment, ControlHiddenComment hwpHiddenComment) {
@@ -181,6 +193,8 @@ public class ForSubList extends Converter {
         // todo : linkListIDRef, linkListNextIDRef,  hasTextRef, hasNumRef ??
 
         paraList(hiddenComment.subList(), hwpHiddenComment.getParagraphList());
+
+        parameter.releaseSubListConverter(this);
     }
 
     public void convertForDrawText(DrawText drawText, TextBox hwpTextBox) {
@@ -199,6 +213,8 @@ public class ForSubList extends Converter {
         // todo : linkListIDRef, linkListNextIDRef,  hasTextRef, hasNumRef ??
 
         paraList(drawText.subList(), hwpTextBox.getParagraphList());
+
+        parameter.releaseSubListConverter(this);
     }
 
     public void convertForMasterPage(MasterPageXMLFile masterPageXMLFile, BatangPageInfo hwpBatangPageInfo) {
@@ -216,5 +232,7 @@ public class ForSubList extends Converter {
                 .hasNumRef(false);
 
         paraList(masterPageXMLFile.subList(), hwpBatangPageInfo.getParagraphList());
+
+        parameter.releaseSubListConverter(this);
     }
 }
