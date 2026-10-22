@@ -30,7 +30,7 @@ public class ForShapeObject extends Converter {
         if (hwpGSOHeader != null) {
             shapeObject.id(String.valueOf(hwpGSOHeader.getInstanceId()));
             shapeObject.zOrder(hwpGSOHeader.getzOrder());
-            shapeObject.numberingType(numberingType(hwpGSOHeader.getProperty().getObjectNumberSort()));
+            shapeObject.numberingType(numberingType(hwpGSOHeader.getProperty().getValue()));
             shapeObject.textWrap(textWrapMethod(hwpGSOHeader.getProperty().getTextFlowMethod()));
             shapeObject.textFlow(textFlowSide(hwpGSOHeader.getProperty().getTextHorzArrange()));
         } else {
@@ -51,18 +51,23 @@ public class ForShapeObject extends Converter {
         shapeComment();
     }
 
-    private NumberingType numberingType(ObjectNumberSort hwpObjectNumberSort) {
-        switch (hwpObjectNumberSort) {
-            case None:
-                return NumberingType.NONE;
-            case Figure:
+    /**
+     * 번호 범주 = 개체 속성 bit 26–27(하위 2비트)만 읽는다.
+     * hwplib 의 getObjectNumberSort() 는 bit 26–28 세 비트를 읽어 4~7 을 None 으로 돌려준다 — 한글은 하위 2비트로 읽는다
+     * (한글 저장본 대조: 세 비트 값 6 → TABLE · 5 → PICTURE · 4 → NONE. MS Word 에서 온 문서의 표에 6 이 흔하다).
+     * NONE 으로 쓰면 표·그림 번호가 밀려 캡션 글이 달라진다.
+     */
+    private NumberingType numberingType(long hwpGsoProperty) {
+        switch ((int) ((hwpGsoProperty >> 26) & 3)) {
+            case 1:
                 return NumberingType.PICTURE;
-            case Table:
+            case 2:
                 return NumberingType.TABLE;
-            case Equation:
+            case 3:
                 return NumberingType.EQUATION;
+            default:
+                return NumberingType.NONE;
         }
-        return NumberingType.NONE;
     }
 
     private TextWrapMethod textWrapMethod(TextFlowMethod hwpTextFlowMethod) {
