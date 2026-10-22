@@ -74,6 +74,23 @@ public class Parameter {
         subListConverterStack.push(subListConverter);
     }
 
+    /**
+     * 테두리/배경 참조 번호.
+     * HWP 글자 모양·문단 모양이 테두리/배경 0(없음)을 가리키면, 한글은 HWPX 의 1번에 기본 테두리/배경을 새로 넣고
+     * 나머지 번호를 하나씩 민다(한글 저장본 대조). 0 을 그대로 쓰면 없는 번호를 가리키게 된다.
+     * ForBorderFills 가 기본 테두리/배경을 넣으면 borderFillShift = 1 — 테두리/배경 번호를 쓰는 곳은 모두 이 함수를 거친다.
+     */
+    private int borderFillShift = 0;
+
+    public void borderFillShift(int shift) {
+        borderFillShift = shift;
+    }
+
+    public String borderFillRef(long hwpId) {
+        if (hwpId == -1) return "4294967295";
+        return String.valueOf(hwpId + borderFillShift);
+    }
+
     public static class HWPInfo {
         private HWPFile file;
         private int sectionCount = 0;

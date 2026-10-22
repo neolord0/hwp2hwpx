@@ -36,7 +36,7 @@ public class ForTable extends ForShapeObject {
                 .rowCntAnd((short) hwpTable.getTable().getRowCount())
                 .colCntAnd((short) hwpTable.getTable().getColumnCount())
                 .cellSpacingAnd(hwpTable.getTable().getCellSpacing())
-                .borderFillIDRefAnd(ValueConvertor.refID(hwpTable.getTable().getBorderFillId()))
+                .borderFillIDRefAnd(parameter.borderFillRef(hwpTable.getTable().getBorderFillId()))
                 .noAdjust(false);
 
         inMargin();
@@ -81,7 +81,7 @@ public class ForTable extends ForShapeObject {
                 .startColAddrAnd((short) zoneInfo.getStartColumn())
                 .endRowAddrAnd((short) zoneInfo.getEndRow())
                 .endColAddrAnd((short) zoneInfo.getEndColumn())
-                .borderFillIDRef(ValueConvertor.refID(zoneInfo.getBorderFillId()));
+                .borderFillIDRef(parameter.borderFillRef(zoneInfo.getBorderFillId()));
     }
 
     private void trs() {
