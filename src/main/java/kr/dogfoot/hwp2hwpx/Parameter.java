@@ -64,9 +64,11 @@ public class Parameter {
 
     public ForSubList subListConverter() {
         if (subListConverterStack.isEmpty()) {
-            ForSubList newOne = new ForSubList(this);
-            subListConverterStack.push(newOne);
-            return newOne;
+            // 새로 만든 변환기는 쓰는 동안 풀에 넣지 않는다 — 반납(releaseSubListConverter) 때만 넣는다.
+            // 여기서도 push 하면, 이 변환기가 일하는 중에 안쪽 목록(캡션·메모 등)을 변환할 때 같은 변환기를 다시 꺼내 쓰게 되어
+            // 바깥 문단의 ForChars 상태가 덮인다 → 바깥 글이 안쪽 목록 마지막 문단으로 새어 들어가거나,
+            // ForChars.extendControl 에서 IndexOutOfBoundsException 이 난다(이슈 #17 수정 뒤에도 남은 경우).
+            return new ForSubList(this);
         }
 
         return subListConverterStack.pop();
