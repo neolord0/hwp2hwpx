@@ -173,21 +173,37 @@ public class ForChars extends Converter {
             endT();
             inlineControlConverter.fieldEnd(currentRun.addNewCtrl().addNewFieldEnd(), hwpChar);
         } else if (hwpChar.getCode() == 9) {
-            addTab();
+            addTab(hwpChar);
         }
     }
 
-    private void addTab() {
+    /**
+     * 탭 문자의 폭·채움·종류를 HWP 에서 옮긴다.
+     * HWP 탭 문자의 부가 12바이트 = 폭(UINT32) + 채움(1바이트) + 종류(1바이트) + 나머지 — 한글은 이 값을 HWPX `hp:tab` 에 그대로 쓴다(한글 저장본 대조).
+     * 4000·없음·왼쪽으로 고정하면 차례의 점선 채움과 오른쪽 정렬 쪽 번호가 사라진다.
+     */
+    private void addTab(HWPCharControlInline hwpChar) {
         startT();
         if (textBuffer.length() > 0) {
             currentT.addText(textBuffer.toString());
             textBuffer.setLength(0);
         }
 
+        int width = 4000;
+        LineType2 leader = LineType2.NONE;
+        TabItemType type = TabItemType.LEFT;
+        byte[] b = hwpChar.getAddition();
+        if (b != null && b.length >= 6) {
+            width = (b[0] & 0xff) | ((b[1] & 0xff) << 8) | ((b[2] & 0xff) << 16) | ((b[3] & 0xff) << 24);
+            LineType2 l = LineType2.fromIndex(b[4] & 0xff);
+            TabItemType t = TabItemType.fromIndex(b[5] & 0xff);
+            if (l != null) leader = l;
+            if (t != null) type = t;
+        }
         currentT.addNewTab()
-                .widthAnd(4000)
-                .leaderAnd(LineType2.NONE)
-                .type(TabItemType.LEFT);
+                .widthAnd(width)
+                .leaderAnd(leader)
+                .type(type);
     }
 
     private void extendControl(HWPCharControlExtend hwpChar, int extendControlIndex) {
