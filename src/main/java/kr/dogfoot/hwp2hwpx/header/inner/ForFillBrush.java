@@ -26,6 +26,15 @@ public class ForFillBrush {
         }
     }
 
+    /**
+     * 채우기 종류가 하나도 없으면 도형에 fillBrush 를 만들지 않는다.
+     * 이전에는 늘 만들어 빈 `<hc:fillBrush/>` 가 남았다 — 한글 저장본은 이 경우 요소를 쓰지 않는다.
+     */
+    public static boolean hasAnyFill(FillInfo hwpFillInfo) {
+        return hwpFillInfo != null && hwpFillInfo.getType() != null
+                && (hwpFillInfo.getType().hasPatternFill() || hwpFillInfo.getType().hasGradientFill() || hwpFillInfo.getType().hasImageFill());
+    }
+
     public static void convertForDrawingObject(FillBrush fillBrush, FillInfo hwpFillInfo, Parameter parameter) {
         if (hwpFillInfo.getType().hasPatternFill()) {
             fillBrush.createWinBrush();

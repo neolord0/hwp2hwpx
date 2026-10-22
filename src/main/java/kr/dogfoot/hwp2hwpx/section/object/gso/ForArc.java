@@ -34,8 +34,10 @@ public class ForArc extends ForShapeComponent {
         arc.createLineShape();
         ForDrawingObject.lineShape(arc.lineShape(), hwpSCN.getLineInfo());
 
-        arc.createFillBrush();
-        ForFillBrush.convertForDrawingObject(arc.fillBrush(), hwpSCN.getFillInfo(), parameter);
+        if (ForFillBrush.hasAnyFill(hwpSCN.getFillInfo())) {
+            arc.createFillBrush();
+            ForFillBrush.convertForDrawingObject(arc.fillBrush(), hwpSCN.getFillInfo(), parameter);
+        }
 
         if (hwpSCN.getShadowInfo() != null) {
             arc.createShadow();

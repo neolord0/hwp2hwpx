@@ -30,8 +30,10 @@ public class ForRectangle extends ForShapeComponent {
         rectangle.createLineShape();
         ForDrawingObject.lineShape(rectangle.lineShape(), hwpSCN.getLineInfo());
 
-        rectangle.createFillBrush();
-        ForFillBrush.convertForDrawingObject(rectangle.fillBrush(), hwpSCN.getFillInfo(), parameter);
+        if (ForFillBrush.hasAnyFill(hwpSCN.getFillInfo())) {
+            rectangle.createFillBrush();
+            ForFillBrush.convertForDrawingObject(rectangle.fillBrush(), hwpSCN.getFillInfo(), parameter);
+        }
 
         if (hwpSCN.getShadowInfo() != null) {
             rectangle.createShadow();
