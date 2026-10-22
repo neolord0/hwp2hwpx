@@ -96,9 +96,21 @@ public class ValueConvertor {
         return LineWidth.MM_0_1;
     }
 
+    /**
+     * 알파 바이트가 0 이 아니면 알파를 앞에 붙여 쓴다 — 한글 저장본이 그렇게 쓴다(#FF000000 · #10000000).
+     * 한글은 알파를 0 채움 없이 쓴다(알파 0x0A → 「#A10FCA0」 7자리) — 그대로 따른다.
+     * 이전에는 알파를 버려 무늬 색 #FF000000 이 #000000 이 됐다(기본 문단 테두리/배경 등).
+     */
     public static String color(Color4Byte hwpColor) {
         if (hwpColor.getValue() == 4294967295L) return "none";
 
+        if (hwpColor.getA() != 0) {
+            return String.format("#%X%02X%02X%02X",
+                    hwpColor.getA(),
+                    hwpColor.getR(),
+                    hwpColor.getG(),
+                    hwpColor.getB());
+        }
         return String.format("#%02X%02X%02X",
                 hwpColor.getR(),
                 hwpColor.getG(),
