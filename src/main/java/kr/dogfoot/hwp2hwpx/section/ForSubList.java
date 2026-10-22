@@ -47,6 +47,29 @@ public class ForSubList extends Converter {
         parameter.releaseSubListConverter(this);
     }
 
+    /**
+     * 메모 본문 — 한글은 HWP 의 메모 목록(BodyText 의 MemoList) 문단을 HWPX 메모 필드 안 subList 로 쓴다.
+     * 속성값은 한글 저장본과 같게: textWidth·textHeight 0, 연결·참조 없음.
+     */
+    public void convertForMemo(FieldBegin fieldBegin, kr.dogfoot.hwplib.object.bodytext.paragraph.memo.Memo hwpMemo) {
+        fieldBegin.createSubList();
+        fieldBegin.subList()
+                .idAnd("")
+                .textDirectionAnd(TextDirection.HORIZONTAL)
+                .lineWrapAnd(LineWrapMethod.BREAK)
+                .vertAlignAnd(kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.VerticalAlign2.TOP)
+                .linkListIDRefAnd(String.valueOf(0))
+                .linkListNextIDRefAnd(String.valueOf(0))
+                .textWidthAnd(0)
+                .textHeightAnd(0)
+                .hasTextRefAnd(false)
+                .hasNumRef(false);
+
+        paraList(fieldBegin.subList(), hwpMemo.getParagraphList());
+
+        parameter.releaseSubListConverter(this);
+    }
+
     private void paraList(SubList subList, ParagraphList paragraphList) {
         for (Paragraph hwpPara : paragraphList) {
             paraConverter.convert(subList.addNewPara(), hwpPara);
