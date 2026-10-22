@@ -26,8 +26,10 @@ public class ForPolygon extends ForShapeComponent {
         polygon.createLineShape();
         ForDrawingObject.lineShape(polygon.lineShape(), hwpSCN.getLineInfo());
 
-        polygon.createFillBrush();
-        ForFillBrush.convertForDrawingObject(polygon.fillBrush(), hwpSCN.getFillInfo(), parameter);
+        if (ForFillBrush.hasAnyFill(hwpSCN.getFillInfo())) {
+            polygon.createFillBrush();
+            ForFillBrush.convertForDrawingObject(polygon.fillBrush(), hwpSCN.getFillInfo(), parameter);
+        }
 
         if (hwpSCN.getShadowInfo() != null) {
             polygon.createShadow();
