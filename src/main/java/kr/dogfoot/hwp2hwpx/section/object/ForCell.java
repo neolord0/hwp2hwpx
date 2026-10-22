@@ -25,7 +25,7 @@ public class ForCell extends Converter {
                 .protectAnd(hwpCell.getListHeader().getProperty().isProtectCell())
                 .editableAnd(hwpCell.getListHeader().getProperty().isEditableAtFormMode())
                 .dirtyAnd(false)
-                .borderFillIDRef(ValueConvertor.refID(hwpCell.getListHeader().getBorderFillId()));
+                .borderFillIDRef(parameter.borderFillRef(hwpCell.getListHeader().getBorderFillId()));
         // todo : dirty ??
 
         cellAddr();

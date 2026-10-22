@@ -42,7 +42,7 @@ public class ForCharProperties extends Converter {
                 .useFontSpaceAnd(hwpCharShape.getProperty().isUsingSpaceAppropriateForFont())
                 .useKerningAnd(hwpCharShape.getProperty().isKerning())
                 .symMarkAnd(sysMark(hwpCharShape.getProperty().getEmphasisSort()))
-                .borderFillIDRef(String.valueOf(hwpCharShape.getBorderFillId()));
+                .borderFillIDRef(parameter.borderFillRef(hwpCharShape.getBorderFillId()));
 
         fontRef(hwpCharShape.getFaceNameIds());
         ratio(hwpCharShape.getRatios());

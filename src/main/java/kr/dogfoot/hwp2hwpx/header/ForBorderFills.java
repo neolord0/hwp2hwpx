@@ -33,6 +33,11 @@ public class ForBorderFills extends Converter {
         refList.createBorderFills();
 
         int id = 1;
+        if (anyZeroReference()) {   // 한글처럼 1번에 기본 테두리/배경을 넣는다 — Parameter.borderFillRef 주석
+            defaultBorderFill(refList.borderFills().addNew().idAnd("1"));
+            parameter.borderFillShift(1);
+            id = 2;
+        }
         for (kr.dogfoot.hwplib.object.docinfo.BorderFill item : hwpBorderFillList) {
             borderFill = refList.borderFills().addNew().idAnd(String.valueOf(id));
             hwpBorderFill = item;
@@ -40,6 +45,36 @@ public class ForBorderFills extends Converter {
             borderFill();
             id++;
         }
+    }
+
+    private boolean anyZeroReference() {
+        for (kr.dogfoot.hwplib.object.docinfo.CharShape c : parameter.hwp().docInfo().getCharShapeList()) {
+            if (c.getBorderFillId() == 0) return true;
+        }
+        for (kr.dogfoot.hwplib.object.docinfo.ParaShape p : parameter.hwp().docInfo().getParaShapeList()) {
+            if (p.getBorderFillId() == 0) return true;
+        }
+        return false;
+    }
+
+    /** 한글이 넣는 기본 테두리 그대로 — 선 4개 없음 · 대각선 실선 · 0.1 mm · 검정 · 채우기 없음 */
+    private static void defaultBorderFill(BorderFill bf) {
+        bf.threeDAnd(false).shadowAnd(false).centerLineAnd(CenterLineSort.NONE).breakCellSeparateLine(false);
+        bf.createSlash();
+        bf.slash().typeAnd(SlashType.NONE).CrookedAnd(false).isCounter(false);
+        bf.createBackSlash();
+        bf.backSlash().typeAnd(SlashType.NONE).CrookedAnd(false).isCounter(false);
+        bf.createLeftBorder();
+        bf.createRightBorder();
+        bf.createTopBorder();
+        bf.createBottomBorder();
+        bf.createDiagonal();
+        for (Border b : new Border[]{bf.leftBorder(), bf.rightBorder(), bf.topBorder(), bf.bottomBorder()}) {
+            b.typeAnd(kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.LineType2.NONE)
+                    .widthAnd(kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.LineWidth.MM_0_1).color("#000000");
+        }
+        bf.diagonal().typeAnd(kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.LineType2.SOLID)
+                .widthAnd(kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.LineWidth.MM_0_1).color("#000000");
     }
 
     private void borderFill() {

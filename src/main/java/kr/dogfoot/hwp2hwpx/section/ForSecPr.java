@@ -187,7 +187,7 @@ public class ForSecPr extends Converter {
 
     private void pageBorderFill(PageBorderFill pageBorderFill, kr.dogfoot.hwplib.object.bodytext.control.sectiondefine.PageBorderFill hwpPageBorderFill) {
         pageBorderFill
-                .borderFillIDRefAnd(ValueConvertor.refID(hwpPageBorderFill.getBorderFillId()))
+                .borderFillIDRefAnd(parameter.borderFillRef(hwpPageBorderFill.getBorderFillId()))
                 .textBorderAnd(pageBorderFillPositionCriterion(hwpPageBorderFill.getProperty().getPositionCriterion()))
                 .headerInsideAnd(hwpPageBorderFill.getProperty().isIncludeHeader())
                 .footerInsideAnd(hwpPageBorderFill.getProperty().isIncludeFooter())

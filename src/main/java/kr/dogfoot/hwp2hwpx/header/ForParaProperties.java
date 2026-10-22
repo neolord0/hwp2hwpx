@@ -236,7 +236,7 @@ public class ForParaProperties extends Converter {
     private void border() {
         paraPr.createBorder();
         paraPr.border()
-                .borderFillIDRefAnd(String.valueOf(hwpParaShape.getBorderFillId()))
+                .borderFillIDRefAnd(parameter.borderFillRef(hwpParaShape.getBorderFillId()))
                 .offsetLeftAnd((int) hwpParaShape.getLeftBorderSpace())
                 .offsetRightAnd((int) hwpParaShape.getRightBorderSpace())
                 .offsetTopAnd((int) hwpParaShape.getTopBorderSpace())
