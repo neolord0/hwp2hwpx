@@ -91,7 +91,15 @@ public class ForFieldBegin extends Converter {
         }
     }
 
+    /**
+     * 책갈피 필드는 이름을 CtrlData(매개변수 묶음 539 · 항목 0x4000)에서 옮긴다.
+     * 이전에는 「명령 객체가 있으면 이름 없음」이라, 명령 문자열이 비어 있는 책갈피의 이름이 모두 빠졌다(한글 저장본은 이름을 씀).
+     * 다른 종류는 이전 규칙 그대로 — 누름틀은 CtrlData 에 이름이 있어도 한글이 빈 이름으로 쓴다(test/field 의 from.hwpx).
+     */
     private String name(ControlField hwpField) {
+        if (hwpField.getType() == ControlType.FIELD_BOOKMARK && hwpField.getCtrlData() != null && hwpField.getName() != null) {
+            return hwpField.getName();
+        }
         if (hwpField.getHeader().getCommand() != null) return "";
         else if (hwpField.getName() != null) return hwpField.getName();
 
@@ -170,17 +178,24 @@ public class ForFieldBegin extends Converter {
         return null;
     }
 
+    /**
+     * 매개변수.
+     * - Prop = 필드 머리의 「기타 속성」 값(이전에는 9 고정). 한글 저장본 대조: 누름틀 9 · 책갈피 2 · 하이퍼링크 0 · 메모 0
+     * - Command 는 명령 문자열이 있을 때만 — 한글은 빈 명령(책갈피·하이퍼링크)에 Command 를 쓰지 않는다
+     */
     private void parameters(FieldBegin fieldBegin, ControlField hwpField) {
         fieldBegin.createParameters();
         fieldBegin.parameters().name("");
         fieldBegin.parameters().addNewIntegerParam()
                 .nameAnd("Prop")
-                .value(9);
+                .value((int) hwpField.getHeader().getEtcProperty());
 
-        fieldBegin.parameters().addNewStringParam()
-                .nameAnd("Command")
-                .xml_spaceAnd("preserve")
-                .value(hwpField.getHeader().getCommand().toUTF16LEString());
-
+        String cmd = hwpField.getHeader().getCommand() == null ? null : hwpField.getHeader().getCommand().toUTF16LEString();
+        if (cmd != null && cmd.length() > 0) {
+            fieldBegin.parameters().addNewStringParam()
+                    .nameAnd("Command")
+                    .xml_spaceAnd("preserve")
+                    .value(cmd);
+        }
     }
 }
