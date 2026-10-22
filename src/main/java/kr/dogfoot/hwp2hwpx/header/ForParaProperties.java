@@ -153,23 +153,33 @@ public class ForParaProperties extends Converter {
         }
     }
 
+    /**
+     * 들여쓰기·왼쪽·오른쪽 여백의 「글자 단위」.
+     * HWP 원값이 홀수면 글자 단위(원값 = 2 × 값 + 1)다 — 한글은 HwpUnitChar case 에 unit="CHAR" · 값 (원값−1)/2 로 쓴다
+     * (한글 저장본 대조: 글자 단위는 모두 홀수, HWPUNIT 은 모두 짝수). HWPUNIT 으로 쓰면 글자 단위 여백이 좁아져 줄 나눔이 달라진다.
+     * 음수이면서 홀수인 값은 확인한 표본에 없었다.
+     */
+    private void marginValue(kr.dogfoot.hwpxlib.object.common.baseobject.ValueAndUnit v, int raw, boolean inCase) {
+        if (!inCase) {
+            v.valueAnd(raw).unit(ValueUnit2.HWPUNIT);
+        } else if ((raw & 1) != 0) {
+            v.valueAnd((raw - 1) / 2).unit(ValueUnit2.CHAR);
+        } else {
+            v.valueAnd(raw / 2).unit(ValueUnit2.HWPUNIT);
+        }
+    }
+
     private ParaMargin margin(boolean inCase) {
         ParaMargin margin = new ParaMargin();
 
         margin.createIntent();
-        margin.intent()
-                .valueAnd((inCase == true) ? hwpParaShape.getIndent() / 2 : hwpParaShape.getIndent())
-                .unit(ValueUnit2.HWPUNIT);
+        marginValue(margin.intent(), hwpParaShape.getIndent(), inCase);
 
         margin.createLeft();
-        margin.left()
-                .valueAnd((inCase == true) ? hwpParaShape.getLeftMargin() / 2 : hwpParaShape.getLeftMargin())
-                .unit(ValueUnit2.HWPUNIT);
+        marginValue(margin.left(), hwpParaShape.getLeftMargin(), inCase);
 
         margin.createRight();
-        margin.right()
-                .valueAnd((inCase == true) ? hwpParaShape.getRightMargin() / 2 : hwpParaShape.getRightMargin())
-                .unit(ValueUnit2.HWPUNIT);
+        marginValue(margin.right(), hwpParaShape.getRightMargin(), inCase);
 
         margin.createPrev();
         margin.prev()
@@ -184,15 +194,27 @@ public class ForParaProperties extends Converter {
         return margin;
     }
 
+    /**
+     * 줄 간격 값은 HWP 5.0.2.5 이상이면 「줄 간격 2」(getLineSpace2), 그보다 옛 판이면 옛 「줄 간격」(getLineSpace) 에서 읽는다.
+     * 늘 getLineSpace2 를 읽으면 5.0.2.5 미만 문서의 줄 간격이 모두 0 이 된다(한글 저장본은 160%·180% 등).
+     */
+    private long lineSpaceValue() {
+        kr.dogfoot.hwplib.object.fileheader.FileVersion v = parameter.hwp().fileHeader().getVersion();
+        long key = ((long) v.getMM() << 24) | ((long) v.getNN() << 16) | ((long) v.getPP() << 8) | v.getRR();
+        boolean hasLineSpace2 = key >= ((5L << 24) | (0L << 16) | (2L << 8) | 5L);
+        return hasLineSpace2 ? hwpParaShape.getLineSpace2() : hwpParaShape.getLineSpace();
+    }
+
     private LineSpacing lineSpacing(boolean inCase) {
         LineSpacing lineSpacing = new LineSpacing()
                 .typeAnd(lineSpacingType(hwpParaShape.getProperty1().getLineSpaceSort()))
                 .unitAnd(ValueUnit2.HWPUNIT);
 
+        long value = lineSpaceValue();
         if (inCase == true && hwpParaShape.getProperty1().getLineSpaceSort() != LineSpaceSort.RatioForLetter) {
-            lineSpacing.value((int) (hwpParaShape.getLineSpace2() / 2));
+            lineSpacing.value((int) (value / 2));
         } else {
-            lineSpacing.value((int) hwpParaShape.getLineSpace2());
+            lineSpacing.value((int) value);
         }
         return lineSpacing;
     }
@@ -202,7 +224,7 @@ public class ForParaProperties extends Converter {
             case RatioForLetter:
                 return LineSpacingType.PERCENT;
             case FixedValue:
-                return LineSpacingType.PERCENT;
+                return LineSpacingType.FIXED;
             case OnlyMargin:
                 return LineSpacingType.BETWEEN_LINES;
             case AtLeast:
