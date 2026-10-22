@@ -104,6 +104,10 @@ public class ForFieldBegin extends Converter {
     }
 
     private String name(ControlField hwpField) {
+        if (hwpField.getType() == ControlType.FIELD_BOOKMARK && hwpField.getCtrlData() != null && hwpField.getName() != null) {
+            return hwpField.getName();
+        }
+
         if (hwpField.getHeader().getCommand() != null) return "";
         else if (hwpField.getName() != null) return hwpField.getName();
 
@@ -111,13 +115,17 @@ public class ForFieldBegin extends Converter {
     }
 
     private boolean isMemo(ControlField hwpField) {
-        if (hwpField.getHeader().getCommand() == null) return false;
-        String cmd = hwpField.getHeader().getCommand().toUTF16LEString();
+        String cmd = command(hwpField);
         if (cmd == null || !cmd.startsWith("MEMO/")) return false;
         String[] part = cmd.split("/", -1);
         if (part.length < 6) return false;
 
         return true;
+    }
+
+    private static String command(ControlField hwpField) {
+        if (hwpField.getHeader().getCommand() == null) return null;
+        return hwpField.getHeader().getCommand().toUTF16LEString();
     }
 
     /**
@@ -128,7 +136,7 @@ public class ForFieldBegin extends Converter {
      * 작성 시각: FILETIME(UTC)에 9시간을 더해 「Z」를 붙인다 — 한글 저장본이 그렇게 쓴다(한국 시각을 UTC 로 표기하는 한글 동작을 그대로 따름).
      */
     private void memo(FieldBegin fieldBegin, ControlField hwpField) {
-        String cmd = hwpField.getHeader().getCommand().toUTF16LEString();
+        String cmd = command(hwpField);
         String[] part = cmd.split("/", -1);
 
         int number;
@@ -200,12 +208,14 @@ public class ForFieldBegin extends Converter {
         fieldBegin.parameters().name("");
         fieldBegin.parameters().addNewIntegerParam()
                 .nameAnd("Prop")
-                .value(9);
+                .value((int) hwpField.getHeader().getEtcProperty());
 
-        fieldBegin.parameters().addNewStringParam()
-                .nameAnd("Command")
-                .xml_spaceAnd("preserve")
-                .value(hwpField.getHeader().getCommand().toUTF16LEString());
-
+        String cmd = command(hwpField);
+        if (cmd != null && cmd.length() > 0) {
+            fieldBegin.parameters().addNewStringParam()
+                    .nameAnd("Command")
+                    .xml_spaceAnd("preserve")
+                    .value(cmd);
+        }
     }
 }
