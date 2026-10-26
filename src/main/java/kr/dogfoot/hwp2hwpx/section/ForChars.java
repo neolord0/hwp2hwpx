@@ -190,12 +190,24 @@ public class ForChars extends Converter {
             textBuffer.setLength(0);
         }
 
-        ValueConvertor.TabInfo tabInfo = ValueConvertor.tabInfo(hwpChar.getAddition());
+        TabInfo tabInfo = tabInfo(hwpChar.getAddition());
 
         currentT.addNewTab()
                 .widthAnd(tabInfo.width())
                 .leaderAnd(tabInfo.leader())
                 .type(tabInfo.type());
+    }
+
+    private TabInfo tabInfo(byte[] tabAddition) {
+        if (tabAddition == null || tabAddition.length < 6) return new TabInfo(4000, LineType2.NONE, TabItemType.LEFT);
+
+        int width = (tabAddition[0] & 0xff) | ((tabAddition[1] & 0xff) << 8) | ((tabAddition[2] & 0xff) << 16) | ((tabAddition[3] & 0xff) << 24);
+        LineType2 leader = LineType2.fromIndex(tabAddition[4] & 0xff);
+        TabItemType type = TabItemType.fromIndex(tabAddition[5] & 0xff);
+
+        return new TabInfo(width,
+                (leader == null) ? LineType2.NONE : leader,
+                (type == null) ? TabItemType.LEFT : type);
     }
 
     private void extendControl(HWPCharControlExtend hwpChar, int extendControlIndex) {
@@ -284,5 +296,29 @@ public class ForChars extends Converter {
 
         currentT.addText(textBuffer.toString());
         currentT = null;
+    }
+
+    private static class TabInfo {
+        private int width;
+        private LineType2 leader;
+        private TabItemType type;
+
+        public TabInfo(int width, LineType2 leader, TabItemType type) {
+            this.width = width;
+            this.leader = leader;
+            this.type = type;
+        }
+
+        public int width() {
+            return width;
+        }
+
+        public LineType2 leader() {
+            return leader;
+        }
+
+        public TabItemType type() {
+            return type;
+        }
     }
 }
