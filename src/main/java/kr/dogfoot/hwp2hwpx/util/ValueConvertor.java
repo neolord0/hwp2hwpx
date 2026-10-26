@@ -104,14 +104,15 @@ public class ValueConvertor {
     public static String color(Color4Byte hwpColor) {
         if (hwpColor.getValue() == 4294967295L) return "none";
 
-        if (hwpColor.getA() != 0) {
-            return String.format("#%X%02X%02X%02X",
-                    hwpColor.getA(),
+        if (hwpColor.getA() == 0) {
+            return String.format("#%02X%02X%02X",
                     hwpColor.getR(),
                     hwpColor.getG(),
                     hwpColor.getB());
         }
-        return String.format("#%02X%02X%02X",
+
+        return String.format("#%X%02X%02X%02X",
+                hwpColor.getA(),
                 hwpColor.getR(),
                 hwpColor.getG(),
                 hwpColor.getB());
