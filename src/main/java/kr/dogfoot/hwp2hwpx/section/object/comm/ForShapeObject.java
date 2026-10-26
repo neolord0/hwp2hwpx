@@ -6,6 +6,8 @@ import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.CtrlHeaderGso;
 import kr.dogfoot.hwplib.object.bodytext.control.ctrlheader.gso.*;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.caption.Caption;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.caption.CaptionDirection;
+import kr.dogfoot.hwplib.org.apache.poi.util.BitField;
+import kr.dogfoot.hwplib.util.binary.BitFlag;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.HorzRelTo;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.VertRelTo;
 import kr.dogfoot.hwpxlib.object.content.section_xml.enumtype.*;
@@ -58,7 +60,7 @@ public class ForShapeObject extends Converter {
      * NONE 으로 쓰면 표·그림 번호가 밀려 캡션 글이 달라진다.
      */
     private NumberingType numberingType(long hwpGsoProperty) {
-        switch ((int) ((hwpGsoProperty >> 26) & 3)) {
+        switch ((int) BitFlag.get(hwpGsoProperty, 26, 27)) {
             case 1:
                 return NumberingType.PICTURE;
             case 2:
