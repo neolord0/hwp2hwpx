@@ -9,8 +9,11 @@ import kr.dogfoot.hwplib.object.docinfo.borderfill.BackSlashDiagonalShape;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.BorderFillProperty;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.EachBorder;
 import kr.dogfoot.hwplib.object.docinfo.borderfill.SlashDiagonalShape;
+import kr.dogfoot.hwpxlib.object.common.ObjectList;
 import kr.dogfoot.hwpxlib.object.content.header_xml.RefList;
 import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.CenterLineSort;
+import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.LineType2;
+import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.LineWidth;
 import kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.SlashType;
 import kr.dogfoot.hwpxlib.object.content.header_xml.references.BorderFill;
 import kr.dogfoot.hwpxlib.object.content.header_xml.references.borderfill.Border;
@@ -34,10 +37,11 @@ public class ForBorderFills extends Converter {
 
         int id = 1;
         if (anyZeroReference()) {   // 한글처럼 1번에 기본 테두리/배경을 넣는다 — Parameter.borderFillRef 주석
-            defaultBorderFill(refList.borderFills().addNew().idAnd("1"));
+            addDefaultBorderFill(refList.borderFills());
             parameter.borderFillShift(1);
-            id = 2;
+            id++;
         }
+
         for (kr.dogfoot.hwplib.object.docinfo.BorderFill item : hwpBorderFillList) {
             borderFill = refList.borderFills().addNew().idAnd(String.valueOf(id));
             hwpBorderFill = item;
@@ -46,6 +50,7 @@ public class ForBorderFills extends Converter {
             id++;
         }
     }
+
 
     private boolean anyZeroReference() {
         for (kr.dogfoot.hwplib.object.docinfo.CharShape c : parameter.hwp().docInfo().getCharShapeList()) {
@@ -57,24 +62,42 @@ public class ForBorderFills extends Converter {
         return false;
     }
 
-    /** 한글이 넣는 기본 테두리 그대로 — 선 4개 없음 · 대각선 실선 · 0.1 mm · 검정 · 채우기 없음 */
-    private static void defaultBorderFill(BorderFill bf) {
-        bf.threeDAnd(false).shadowAnd(false).centerLineAnd(CenterLineSort.NONE).breakCellSeparateLine(false);
+    private void addDefaultBorderFill(ObjectList<BorderFill> borderFillObjectList) {
+        BorderFill bf = borderFillObjectList.addNew()
+                .idAnd("1")
+                .threeDAnd(false)
+                .shadowAnd(false)
+                .centerLineAnd(CenterLineSort.NONE)
+                .breakCellSeparateLineAnd(false);
+
         bf.createSlash();
-        bf.slash().typeAnd(SlashType.NONE).CrookedAnd(false).isCounter(false);
+        bf.slash()
+                .typeAnd(SlashType.NONE)
+                .CrookedAnd(false)
+                .isCounter(false);
+
         bf.createBackSlash();
-        bf.backSlash().typeAnd(SlashType.NONE).CrookedAnd(false).isCounter(false);
+        bf.backSlash()
+                .typeAnd(SlashType.NONE)
+                .CrookedAnd(false)
+                .isCounter(false);
+
         bf.createLeftBorder();
         bf.createRightBorder();
         bf.createTopBorder();
         bf.createBottomBorder();
-        bf.createDiagonal();
         for (Border b : new Border[]{bf.leftBorder(), bf.rightBorder(), bf.topBorder(), bf.bottomBorder()}) {
-            b.typeAnd(kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.LineType2.NONE)
-                    .widthAnd(kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.LineWidth.MM_0_1).color("#000000");
+            b
+                    .typeAnd(LineType2.NONE)
+                    .widthAnd(LineWidth.MM_0_1)
+                    .color("#000000");
         }
-        bf.diagonal().typeAnd(kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.LineType2.SOLID)
-                .widthAnd(kr.dogfoot.hwpxlib.object.content.header_xml.enumtype.LineWidth.MM_0_1).color("#000000");
+
+        bf.createDiagonal();
+        bf.diagonal()
+                .typeAnd(LineType2.SOLID)
+                .widthAnd(LineWidth.MM_0_1)
+                .color("#000000");
     }
 
     private void borderFill() {
