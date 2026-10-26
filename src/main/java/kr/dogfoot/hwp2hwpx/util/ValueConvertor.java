@@ -553,5 +553,41 @@ public class ValueConvertor {
                 return ArcType.NORMAL;
         }
     }
+
+    public static TabInfo tabInfo(byte[] tabAddition) {
+        if (tabAddition == null || tabAddition.length < 6) return new TabInfo(4000, LineType2.NONE, TabItemType.LEFT);
+
+        int width = (tabAddition[0] & 0xff) | ((tabAddition[1] & 0xff) << 8) | ((tabAddition[2] & 0xff) << 16) | ((tabAddition[3] & 0xff) << 24);
+        LineType2 leader = LineType2.fromIndex(tabAddition[4] & 0xff);
+        TabItemType type = TabItemType.fromIndex(tabAddition[5] & 0xff);
+
+        return new TabInfo(width,
+                (leader == null) ? LineType2.NONE : leader,
+                (type == null) ? TabItemType.LEFT : type);
+    }
+
+    public static class TabInfo {
+        private int width;
+        private LineType2 leader;
+        private TabItemType type;
+
+        public TabInfo(int width, LineType2 leader, TabItemType type) {
+            this.width = width;
+            this.leader = leader;
+            this.type = type;
+        }
+
+        public int width() {
+            return width;
+        }
+
+        public LineType2 leader() {
+            return leader;
+        }
+
+        public TabItemType type() {
+            return type;
+        }
+    }
 }
 

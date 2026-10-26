@@ -5,6 +5,7 @@ import kr.dogfoot.hwp2hwpx.Parameter;
 import kr.dogfoot.hwp2hwpx.section.object.*;
 import kr.dogfoot.hwp2hwpx.section.object.gso.ForGso;
 import kr.dogfoot.hwp2hwpx.section.object.gso.form.ForForm;
+import kr.dogfoot.hwp2hwpx.util.ValueConvertor;
 import kr.dogfoot.hwplib.object.bodytext.control.*;
 import kr.dogfoot.hwplib.object.bodytext.control.gso.GsoControl;
 import kr.dogfoot.hwplib.object.bodytext.paragraph.Paragraph;
@@ -189,21 +190,12 @@ public class ForChars extends Converter {
             textBuffer.setLength(0);
         }
 
-        int width = 4000;
-        LineType2 leader = LineType2.NONE;
-        TabItemType type = TabItemType.LEFT;
-        byte[] b = hwpChar.getAddition();
-        if (b != null && b.length >= 6) {
-            width = (b[0] & 0xff) | ((b[1] & 0xff) << 8) | ((b[2] & 0xff) << 16) | ((b[3] & 0xff) << 24);
-            LineType2 l = LineType2.fromIndex(b[4] & 0xff);
-            TabItemType t = TabItemType.fromIndex(b[5] & 0xff);
-            if (l != null) leader = l;
-            if (t != null) type = t;
-        }
+        ValueConvertor.TabInfo tabInfo = ValueConvertor.tabInfo(hwpChar.getAddition());
+
         currentT.addNewTab()
-                .widthAnd(width)
-                .leaderAnd(leader)
-                .type(type);
+                .widthAnd(tabInfo.width())
+                .leaderAnd(tabInfo.leader())
+                .type(tabInfo.type());
     }
 
     private void extendControl(HWPCharControlExtend hwpChar, int extendControlIndex) {
