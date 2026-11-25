@@ -22,6 +22,7 @@
 ```
 
 * hwp 파일에 대한 라이브러리는 https://github.com/neolord0/hwplib 을 참조해 주세요.
+* hwp 파일 그리기 라이브러리는 https://github.com/neolord0/hwpdrawer 을 참조해 주세요.
 * hwpx 파일에 대한 라이브러리는 https://github.com/neolord0/hwpxlib 을 참조해 주세요.
 
 2026.10.26
